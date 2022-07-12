@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:19:33 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/12 16:34:23 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:44:11 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct			s_rules
 	int					time_eat;
 	int					time_sleep;
 	int					nb_eat;
-	int					dieded;
+	int					dead;
 	int					all_ate;
 	long long			first_timestamp;
 	pthread_mutex_t		meal_check;
@@ -49,9 +49,8 @@ typedef struct			s_rules
 }						t_rules;
 
 int						ft_error(char *str);
-int						error_manager(int error);
 
-int						init_all(t_rules *rules, char **argv);
+int						init_manager(t_rules *rules, char **argv);
 
 size_t					ft_strlen(char const *str);
 int						ft_atoi(char const *str);

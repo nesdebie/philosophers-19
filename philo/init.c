@@ -6,13 +6,13 @@
 /*   By: nedebies <nedebies@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:20 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/12 16:34:39 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:44:05 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_mutex(t_rules *rules)
+static int	init_mutex(t_rules *rules)
 {
 	int i;
 
@@ -29,7 +29,7 @@ int	init_mutex(t_rules *rules)
 	return (0);
 }
 
-int	init_philosophers(t_rules *rules)
+static int	init_philosophers(t_rules *rules)
 {
 	int i;
 
@@ -46,14 +46,14 @@ int	init_philosophers(t_rules *rules)
 	return (0);
 }
 
-int	init_all(t_rules *rules, char **argv)
+int	init_manager(t_rules *rules, char **argv)
 {
 	rules->nb_philo = ft_atoi(argv[1]);
 	rules->time_death = ft_atoi(argv[2]);
 	rules->time_eat = ft_atoi(argv[3]);
 	rules->time_sleep = ft_atoi(argv[4]);
 	rules->all_ate = 0;
-	rules->dieded = 0;
+	rules->dead = 0;
 	if (rules->nb_philo < 2 || rules->time_death < 0 || rules->time_eat < 0
 		|| rules->time_sleep < 0 || rules->nb_philo > 250)
 		return (1);

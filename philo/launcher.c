@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:15 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/12 16:34:35 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:47:41 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	*p_thread(void *void_philosopher)
 	rules = philo->rules;
 	if (philo->id % 2)
 		usleep(15000);
-	while (!(rules->dieded))
+	while (!(rules->dead))
 	{
 		philo_eats(philo);
 		if (rules->all_ate)
@@ -55,13 +55,13 @@ static void	*p_thread(void *void_philosopher)
 	return (NULL);
 }
 
-static void	exit_launcher(t_rules *rules, t_philosopher *philos)
+static void	exit_launcher(t_rules *rules, t_philosopher *philo)
 {
 	int i;
 
 	i = -1;
 	while (++i < rules->nb_philo)
-		pthread_join(philos[i].thread_id, NULL);
+		pthread_join(philo[i].thread_id, NULL);
 	i = -1;
 	while (++i < rules->nb_philo)
 		pthread_mutex_destroy(&(rules->forks[i]));
@@ -75,18 +75,18 @@ static void	death_checker(t_rules *r, t_philosopher *p)
 	while (!(r->all_ate))
 	{
 		i = -1;
-		while (++i < r->nb_philo && !(r->dieded))
+		while (++i < r->nb_philo && !(r->dead))
 		{
 			pthread_mutex_lock(&(r->meal_check));
 			if (timestamp() - p[i].t_last_meal > r->time_death)
 			{
 				action_print(r, i, "died");
-				r->dieded = 1;
+				r->dead = 1;
 			}
 			pthread_mutex_unlock(&(r->meal_check));
 			usleep(100);
 		}
-		if (r->dieded)
+		if (r->dead)
 			break ;
 		i = 0;
 		while (r->nb_eat != -1 && i < r->nb_philo && p[i].x_ate >= r->nb_eat)
@@ -99,19 +99,19 @@ static void	death_checker(t_rules *r, t_philosopher *p)
 int		launcher(t_rules *rules)
 {
 	int				i;
-	t_philosopher	*phi;
+	t_philosopher	*philo;
 
 	i = 0;
-	phi = rules->philosophers;
+	philo = rules->philosophers;
 	rules->first_timestamp = timestamp();
 	while (i < rules->nb_philo)
 	{
-		if (pthread_create(&(phi[i].thread_id), NULL, p_thread, &(phi[i])))
-			return (1);
-		phi[i].t_last_meal = timestamp();
+		if (pthread_create(&(philo[i].thread_id), NULL, p_thread, &(philo[i])))
+			return (0);
+		philo[i].t_last_meal = timestamp();
 		i++;
 	}
 	death_checker(rules, rules->philosophers);
-	exit_launcher(rules, phi);
-	return (0);
+	exit_launcher(rules, philo);
+	return (1);
 }
