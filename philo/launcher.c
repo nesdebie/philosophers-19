@@ -6,13 +6,13 @@
 /*   By: nedebies <nedebies@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:15 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/12 12:04:41 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:34:35 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_eats(t_philosopher *philo)
+static void	philo_eats(t_philosopher *philo)
 {
 	t_rules *rules;
 
@@ -31,7 +31,7 @@ void	philo_eats(t_philosopher *philo)
 	pthread_mutex_unlock(&(rules->forks[philo->right_fork_id]));
 }
 
-void	*p_thread(void *void_philosopher)
+static void	*p_thread(void *void_philosopher)
 {
 	int				i;
 	t_philosopher	*philo;
@@ -55,7 +55,7 @@ void	*p_thread(void *void_philosopher)
 	return (NULL);
 }
 
-void	exit_launcher(t_rules *rules, t_philosopher *philos)
+static void	exit_launcher(t_rules *rules, t_philosopher *philos)
 {
 	int i;
 
@@ -68,7 +68,7 @@ void	exit_launcher(t_rules *rules, t_philosopher *philos)
 	pthread_mutex_destroy(&(rules->writing));
 }
 
-void	death_checker(t_rules *r, t_philosopher *p)
+static void	death_checker(t_rules *r, t_philosopher *p)
 {
 	int i;
 

@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:19:33 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/12 12:06:01 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:34:23 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,5 @@ long long				timestamp(void);
 void					smart_sleep(long long time, t_rules *rules);
 
 int						launcher(t_rules *rules);
-void					exit_launcher(t_rules *rules, t_philosopher *philos);
 
 #endif
