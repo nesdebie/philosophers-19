@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:15 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/25 12:13:53 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/25 12:56:06 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static void	philo_eats(t_philosopher *philo)
 
 	rules = philo->rules;
 	pthread_mutex_lock(&(rules->forks[philo->left_fork_id]));
-	action_print(rules, philo->id, "has taken a fork");
+	event_printer(rules, philo->id, "has taken a fork");
 	pthread_mutex_lock(&(rules->forks[philo->right_fork_id]));
-	action_print(rules, philo->id, "has taken a fork");
+	event_printer(rules, philo->id, "has taken a fork");
 	pthread_mutex_lock(&(rules->meal_check));
-	action_print(rules, philo->id, "is eating");
+	event_printer(rules, philo->id, "is eating");
 	philo->t_last_meal = timestamp();
 	pthread_mutex_unlock(&(rules->meal_check));
 	smart_sleep(rules->time_to_eat, rules);
@@ -47,9 +47,9 @@ static void	*p_thread(void *void_philosopher)
 		philo_eats(philo);
 		if (rules->all_ate)
 			break ;
-		action_print(rules, philo->id, "is sleeping");
+		event_printer(rules, philo->id, "is sleeping");
 		smart_sleep(rules->time_to_sleep, rules);
-		action_print(rules, philo->id, "is thinking");
+		event_printer(rules, philo->id, "is thinking");
 		i++;
 	}
 	return (NULL);
@@ -68,7 +68,7 @@ static void	exit_launcher(t_rules *rules, t_philosopher *philo)
 	pthread_mutex_destroy(&(rules->writing));
 }
 
-static void	death_checker(t_rules *r, t_philosopher *p)
+static void	is_dead(t_rules *r, t_philosopher *p)
 {
 	int	i;
 
@@ -80,7 +80,7 @@ static void	death_checker(t_rules *r, t_philosopher *p)
 			pthread_mutex_lock(&(r->meal_check));
 			if (timestamp() - p[i].t_last_meal > r->time_to_die)
 			{
-				action_print(r, i, "died");
+				event_printer(r, i, "died");
 				r->dead = 1;
 			}
 			pthread_mutex_unlock(&(r->meal_check));
@@ -112,7 +112,7 @@ int	launcher(t_rules *rules)
 		philo[i].t_last_meal = timestamp();
 		i++;
 	}
-	death_checker(rules, rules->phi);
+	is_dead(rules, rules->phi);
 	exit_launcher(rules, philo);
 	return (1);
 }
