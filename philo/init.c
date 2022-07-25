@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:20 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/25 12:28:31 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:15:26 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	init_manager(t_rules *rules, char **argv)
 	rules->time_to_sleep = ft_atoi(argv[4]);
 	rules->all_ate = 0;
 	rules->dead = 0;
-	if (rules->number_of_philosophers < 2 || rules->time_to_die < 0
+	if (rules->number_of_philosophers < 1 || rules->time_to_die < 0
 		|| rules->time_to_eat < 0 || rules->time_to_sleep < 0
 		|| rules->number_of_philosophers > 250)
 		return (1);
