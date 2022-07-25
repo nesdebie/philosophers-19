@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nedebies <nedebies@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:40:26 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/12 16:34:48 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/25 11:51:44 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ long long	timestamp(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void		smart_sleep(long long time, t_rules *rules)
+void	smart_sleep(long long time, t_rules *rules)
 {
-	long long i;
+	long long	i;
 
 	i = timestamp();
-	while (!(rules->dieded))
+	while (!(rules->dead))
 	{
 		if (timestamp() - i >= time)
 			break ;
@@ -68,10 +68,10 @@ void		smart_sleep(long long time, t_rules *rules)
 	}
 }
 
-void		action_print(t_rules *rules, int id, char *string)
+void	action_print(t_rules *rules, int id, char *string)
 {
 	pthread_mutex_lock(&(rules->writing));
-	if (!(rules->dieded))
+	if (!(rules->dead))
 	{
 		printf("%lli ", timestamp() - rules->first_timestamp);
 		printf("%i ", id + 1);

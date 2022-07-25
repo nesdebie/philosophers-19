@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nedebies <nedebies@student.s19.be>         +#+  +:+       +#+        */
+/*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:20:21 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/12 16:42:54 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/25 11:49:22 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_rules	rules;
 	int		ret;
