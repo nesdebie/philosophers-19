@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:19:33 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/25 12:12:02 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/25 12:14:45 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@
 # include <stdlib.h>
 # include <string.h>
 # include <pthread.h>
+
+typedef struct s_philosopher
+{
+	int					id;
+	int					x_ate;
+	int					left_fork_id;
+	int					right_fork_id;
+	long long			t_last_meal;
+	struct s_rules		*rules;
+	pthread_t			thread_id;
+}						t_philosopher;
 
 typedef struct s_rules
 {
@@ -34,17 +45,6 @@ typedef struct s_rules
 	pthread_mutex_t		writing;
 	t_philosopher		phi[250];
 }						t_rules;
-
-typedef struct s_philosopher
-{
-	int					id;
-	int					x_ate;
-	int					left_fork_id;
-	int					right_fork_id;
-	long long			t_last_meal;
-	struct s_rules		*rules;
-	pthread_t			thread_id;
-}						t_philosopher;
 
 int						ft_error(char *str);
 
