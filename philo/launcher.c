@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:15 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/25 13:40:44 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/25 15:11:45 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	*p_thread(void *void_philosopher)
 	return (NULL);
 }
 
-static void	exit_launcher(t_rules *rules, t_philosopher *philo)
+static void	ft_destroyer(t_rules *rules, t_philosopher *philo)
 {
 	int	i;
 
@@ -116,6 +116,6 @@ int	launcher(t_rules *rules)
 		i++;
 	}
 	is_dead(rules, rules->phi);
-	exit_launcher(rules, philo);
+	ft_destroyer(rules, philo);
 	return (1);
 }
