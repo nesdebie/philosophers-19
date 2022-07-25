@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:15 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/25 13:39:18 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:40:44 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	exit_launcher(t_rules *rules, t_philosopher *philo)
 
 	if (rules->number_of_philosophers > 1)
 	{
-		i = - 1;
+		i = -1;
 		while (++i < rules->number_of_philosophers)
 			pthread_join(philo[i].thread_id, NULL);
 	}
