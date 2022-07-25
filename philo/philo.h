@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:19:33 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/25 11:50:57 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/25 12:12:02 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@
 
 typedef struct s_rules
 {
-	int					nb_philo;
-	int					time_death;
-	int					time_eat;
-	int					time_sleep;
-	int					nb_eat;
+	int					number_of_philosophers;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					number_of_philo_meals;
 	int					dead;
 	int					all_ate;
 	long long			first_timestamp;
 	pthread_mutex_t		meal_check;
 	pthread_mutex_t		forks[250];
 	pthread_mutex_t		writing;
-	t_philosopher		philosophers[250];
+	t_philosopher		phi[250];
 }						t_rules;
 
 typedef struct s_philosopher
