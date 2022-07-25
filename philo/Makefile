@@ -19,16 +19,19 @@ HEADER	= philo.h
 all:	$(NAME)
 
 %.o: %.c $(HEADER)
-	$(CC) $(FLAGS) -c $<  -o $(<:.c=.o)
+	@$(CC) $(FLAGS) -c $<  -o $(<:.c=.o)
 
 $(NAME): $(OBJS)
-	$(CC) $(INCLUDE) $(FLAGS) -o $(NAME) $(OBJS)
+	@$(CC) $(INCLUDE) $(FLAGS) -o $(NAME) $(OBJS)
+	@echo "Compilation completed.\n./philo is ready to use !"
 
 clean:
-	rm -f $(OBJS) $(B_OBJS)
+	@rm -f $(OBJS) $(B_OBJS)
+	@echo "All <file>.o are removed."
 
 fclean: clean
-	rm -f $(NAME) $(BONUS)
+	@rm -f $(NAME)
+	@echo "./philo is removed."
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:20 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/25 12:13:57 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/25 12:28:31 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static int	init_mutex(t_rules *rules)
 	while (--i >= 0)
 	{
 		if (pthread_mutex_init(&(rules->forks[i]), NULL))
-			return (1);
+			return (0);
 	}
 	if (pthread_mutex_init(&(rules->writing), NULL))
-		return (1);
+		return (0);
 	if (pthread_mutex_init(&(rules->meal_check), NULL))
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 static int	init_philosophers(t_rules *rules)
@@ -66,7 +66,7 @@ int	init_manager(t_rules *rules, char **argv)
 	}
 	else
 		rules->number_of_philo_meals = -1;
-	if (init_mutex(rules))
+	if (!init_mutex(rules))
 		return (2);
 	init_philosophers(rules);
 	return (0);
