@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:40:26 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/26 09:51:52 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/26 14:45:29 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	philo_sleep(long long time, t_rules *rules)
 	i = timestamp();
 	while (!(rules->dead))
 	{
-		if (timestamp() - i >= time)
+		if ((timestamp() - i) >= time)
 			break ;
 		usleep(50);
 	}

@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:15 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/26 09:51:56 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/26 14:29:09 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static void	philo_eats(t_philosopher *philo)
 	pthread_mutex_lock(&(rules->meal_check));
 	print_routine(rules, philo->id, "is eating");
 	philo->t_last_meal = timestamp();
-	pthread_mutex_unlock(&(rules->meal_check));
-	philo_sleep(rules->time_to_eat, rules);
 	(philo->x_ate)++;
+	philo_sleep(rules->time_to_eat, rules);
+	pthread_mutex_unlock(&(rules->meal_check));
 	pthread_mutex_unlock(&(rules->forks[philo->left_fork_id]));
 	pthread_mutex_unlock(&(rules->forks[philo->right_fork_id]));
 }
@@ -55,23 +55,23 @@ static void	*routine(void *void_philosopher)
 	return (NULL);
 }
 
-static void	ft_destroyer(t_rules *rules, t_philosopher *philo)
+static void	ft_destroyer(t_rules *r)
 {
 	int	i;
 
-	if (rules->number_of_philosophers > 1)
+	if (r->number_of_philosophers > 1)
 	{
 		i = -1;
-		while (++i < rules->number_of_philosophers)
-			pthread_join(philo[i].thread_id, NULL);
+		while (++i < r->number_of_philosophers)
+			pthread_join(r->phi[i].thread_id, NULL);
 	}
 	i = -1;
-	while (++i < rules->number_of_philosophers)
-		pthread_mutex_destroy(&(rules->forks[i]));
-	pthread_mutex_destroy(&(rules->writing));
+	while (++i < r->number_of_philosophers)
+		pthread_mutex_destroy(&(r->forks[i]));
+	pthread_mutex_destroy(&(r->writing));
 }
 
-static void	is_dead(t_rules *r, t_philosopher *p)
+static void	is_dead(t_rules *r)
 {
 	int	i;
 
@@ -81,7 +81,7 @@ static void	is_dead(t_rules *r, t_philosopher *p)
 		while (++i < r->number_of_philosophers && !(r->dead))
 		{
 			pthread_mutex_lock(&(r->meal_check));
-			if (timestamp() - p[i].t_last_meal > r->time_to_die)
+			if (timestamp() - r->phi[i].t_last_meal > r->time_to_die)
 			{
 				print_routine(r, i, "died");
 				r->dead = 1;
@@ -93,29 +93,27 @@ static void	is_dead(t_rules *r, t_philosopher *p)
 			break ;
 		i = 0;
 		while (r->number_of_philo_meals != -1 && i < r->number_of_philosophers
-			&& p[i].x_ate >= r->number_of_philo_meals)
+			&& r->phi[i].x_ate >= r->number_of_philo_meals)
 			i++;
 		if (i == r->number_of_philosophers)
 			r->all_ate = 1;
 	}
 }
 
-int	launcher(t_rules *rules)
+int	launcher(t_rules *r)
 {
 	int				i;
-	t_philosopher	*philo;
 
 	i = 0;
-	philo = rules->phi;
-	rules->first_timestamp = timestamp();
-	while (i < rules->number_of_philosophers)
+	r->first_timestamp = timestamp();
+	while (i < r->number_of_philosophers)
 	{
-		if (pthread_create(&(philo[i].thread_id), NULL, routine, &(philo[i])))
+		if (pthread_create(&(r->phi[i].thread_id), NULL, routine, &(r->phi[i])))
 			return (0);
-		philo[i].t_last_meal = timestamp();
+		r->phi[i].t_last_meal = timestamp();
 		i++;
 	}
-	is_dead(rules, rules->phi);
-	ft_destroyer(rules, philo);
+	is_dead(r);
+	ft_destroyer(r);
 	return (1);
 }
