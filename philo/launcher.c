@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:15 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/25 15:11:45 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/26 09:51:56 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ static void	philo_eats(t_philosopher *philo)
 
 	rules = philo->rules;
 	pthread_mutex_lock(&(rules->forks[philo->left_fork_id]));
-	event_printer(rules, philo->id, "has taken a fork");
+	print_routine(rules, philo->id, "has taken a fork");
 	pthread_mutex_lock(&(rules->forks[philo->right_fork_id]));
-	event_printer(rules, philo->id, "has taken a fork");
+	print_routine(rules, philo->id, "has taken a fork");
 	pthread_mutex_lock(&(rules->meal_check));
-	event_printer(rules, philo->id, "is eating");
+	print_routine(rules, philo->id, "is eating");
 	philo->t_last_meal = timestamp();
 	pthread_mutex_unlock(&(rules->meal_check));
-	smart_sleep(rules->time_to_eat, rules);
+	philo_sleep(rules->time_to_eat, rules);
 	(philo->x_ate)++;
 	pthread_mutex_unlock(&(rules->forks[philo->left_fork_id]));
 	pthread_mutex_unlock(&(rules->forks[philo->right_fork_id]));
 }
 
-static void	*p_thread(void *void_philosopher)
+static void	*routine(void *void_philosopher)
 {
 	int				i;
 	t_philosopher	*philo;
@@ -47,9 +47,9 @@ static void	*p_thread(void *void_philosopher)
 		philo_eats(philo);
 		if (rules->all_ate)
 			break ;
-		event_printer(rules, philo->id, "is sleeping");
-		smart_sleep(rules->time_to_sleep, rules);
-		event_printer(rules, philo->id, "is thinking");
+		print_routine(rules, philo->id, "is sleeping");
+		philo_sleep(rules->time_to_sleep, rules);
+		print_routine(rules, philo->id, "is thinking");
 		i++;
 	}
 	return (NULL);
@@ -83,7 +83,7 @@ static void	is_dead(t_rules *r, t_philosopher *p)
 			pthread_mutex_lock(&(r->meal_check));
 			if (timestamp() - p[i].t_last_meal > r->time_to_die)
 			{
-				event_printer(r, i, "died");
+				print_routine(r, i, "died");
 				r->dead = 1;
 			}
 			pthread_mutex_unlock(&(r->meal_check));
@@ -110,7 +110,7 @@ int	launcher(t_rules *rules)
 	rules->first_timestamp = timestamp();
 	while (i < rules->number_of_philosophers)
 	{
-		if (pthread_create(&(philo[i].thread_id), NULL, p_thread, &(philo[i])))
+		if (pthread_create(&(philo[i].thread_id), NULL, routine, &(philo[i])))
 			return (0);
 		philo[i].t_last_meal = timestamp();
 		i++;

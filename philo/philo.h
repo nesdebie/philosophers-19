@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:19:33 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/25 12:53:23 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/26 09:52:01 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int						init_manager(t_rules *rules, char **argv);
 
 size_t					ft_strlen(char const *str);
 int						ft_atoi(char const *str);
-void					event_printer(t_rules *rules, int id, char *string);
+void					print_routine(t_rules *rules, int id, char *string);
 long long				timestamp(void);
-void					smart_sleep(long long time, t_rules *rules);
+void					philo_sleep(long long time, t_rules *rules);
 
 int						launcher(t_rules *rules);
 

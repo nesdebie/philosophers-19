@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:40:26 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/25 12:53:20 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/26 09:51:52 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ long long	timestamp(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void	smart_sleep(long long time, t_rules *rules)
+void	philo_sleep(long long time, t_rules *rules)
 {
 	long long	i;
 
@@ -68,7 +68,7 @@ void	smart_sleep(long long time, t_rules *rules)
 	}
 }
 
-void	event_printer(t_rules *rules, int id, char *string)
+void	print_routine(t_rules *rules, int id, char *string)
 {
 	pthread_mutex_lock(&(rules->writing));
 	if (!(rules->dead))
