@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:20 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/26 12:21:31 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/28 12:30:14 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static int	init_mutex(t_rules *rules)
 		if (pthread_mutex_init(&(rules->forks[i]), NULL))
 			return (0);
 	}
-	if (pthread_mutex_init(&(rules->writing), NULL))
+	if (pthread_mutex_init(&(rules->state_write), NULL))
 		return (0);
-	if (pthread_mutex_init(&(rules->meal_check), NULL))
-		return (0);
+	//if (pthread_mutex_init(&(rules->meal_check), NULL))
+	//	return (0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:40:26 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/26 14:45:29 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/28 12:27:16 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ void	philo_sleep(long long time, t_rules *rules)
 
 void	print_routine(t_rules *rules, int id, char *string)
 {
-	pthread_mutex_lock(&(rules->writing));
+	pthread_mutex_lock(&(rules->state_write));
 	if (!(rules->dead))
 	{
 		printf("%lli ", timestamp() - rules->first_timestamp);
 		printf("%i ", id + 1);
 		printf("%s\n", string);
 	}
-	pthread_mutex_unlock(&(rules->writing));
+	pthread_mutex_unlock(&(rules->state_write));
 	return ;
 }

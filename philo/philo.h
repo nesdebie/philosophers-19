@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:19:33 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/26 12:20:00 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/28 12:27:22 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ typedef struct s_rules
 	int					dead;
 	int					all_ate;
 	long long			first_timestamp;
-	pthread_mutex_t		meal_check;
+	//pthread_mutex_t		meal_check;
 	pthread_mutex_t		forks[250];
-	pthread_mutex_t		writing;
+	pthread_mutex_t		state_write;
 	t_philosopher		phi[250];
 }						t_rules;
 
