@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:40:26 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/28 12:43:11 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/28 13:08:20 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,4 @@ void	print_routine(t_rules *rules, int id, char *string)
 		printf("%s\n", string);
 	}
 	pthread_mutex_unlock(&(rules->state_write));
-	return ;
 }

@@ -6,54 +6,11 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:15 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/28 12:43:17 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/28 13:07:08 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static void	philo_eats(t_philosopher *philo)
-{
-	t_rules	*rules;
-
-	rules = philo->rules;
-	pthread_mutex_lock(&(rules->forks[philo->left_fork_id]));
-	print_routine(rules, philo->id, "has taken a fork");
-	pthread_mutex_lock(&(rules->forks[philo->right_fork_id]));
-	print_routine(rules, philo->id, "has taken a fork");
-	//pthread_mutex_lock(&(rules->meal_check));
-	print_routine(rules, philo->id, "is eating");
-	philo->t_last_meal = get_time();
-	//pthread_mutex_unlock(&(rules->meal_check));
-	(philo->x_ate)++;
-	philo_sleep(rules->time_to_eat, rules);
-	pthread_mutex_unlock(&(rules->forks[philo->left_fork_id]));
-	pthread_mutex_unlock(&(rules->forks[philo->right_fork_id]));
-}
-
-static void	*routine(void *void_philosopher)
-{
-	int				i;
-	t_philosopher	*philo;
-	t_rules			*rules;
-
-	i = 0;
-	philo = (t_philosopher *)void_philosopher;
-	rules = philo->rules;
-	if (philo->id % 2)
-		usleep(15000);
-	while (!(rules->dead))
-	{
-		philo_eats(philo);
-		if (rules->all_ate)
-			break ;
-		print_routine(rules, philo->id, "is sleeping");
-		philo_sleep(rules->time_to_sleep, rules);
-		print_routine(rules, philo->id, "is thinking");
-		i++;
-	}
-	return (NULL);
-}
 
 static void	ft_destroyer(t_rules *r)
 {
@@ -96,6 +53,47 @@ static void	is_dead(t_rules *r)
 		if (i == r->number_of_philosophers)
 			r->all_ate = 1;
 	}
+}
+
+static void	philo_eats(t_philosopher *philo)
+{
+	t_rules	*rules;
+
+	rules = philo->rules;
+	pthread_mutex_lock(&(rules->forks[philo->left_fork_id]));
+	print_routine(rules, philo->id, "has taken a fork");
+	pthread_mutex_lock(&(rules->forks[philo->right_fork_id]));
+	print_routine(rules, philo->id, "has taken a fork");
+	print_routine(rules, philo->id, "is eating");
+	philo->t_last_meal = get_time();
+	(philo->x_ate)++;
+	philo_sleep(rules->time_to_eat, rules);
+	pthread_mutex_unlock(&(rules->forks[philo->left_fork_id]));
+	pthread_mutex_unlock(&(rules->forks[philo->right_fork_id]));
+}
+
+static void	*routine(void *void_philosopher)
+{
+	int				i;
+	t_philosopher	*philo;
+	t_rules			*rules;
+
+	i = 0;
+	philo = (t_philosopher *)void_philosopher;
+	rules = philo->rules;
+	if (philo->id % 2)
+		usleep(15000);
+	while (!(rules->dead))
+	{
+		philo_eats(philo);
+		if (rules->all_ate)
+			break ;
+		print_routine(rules, philo->id, "is sleeping");
+		philo_sleep(rules->time_to_sleep, rules);
+		print_routine(rules, philo->id, "is thinking");
+		i++;
+	}
+	return (NULL);
 }
 
 int	launcher(t_rules *r)
