@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:40:26 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/28 12:27:16 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/28 12:43:11 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_atoi(char const *str)
 	return ((int)(sign * result));
 }
 
-long long	timestamp(void)
+long long	get_time(void)
 {
 	struct timeval	t;
 
@@ -59,10 +59,10 @@ void	philo_sleep(long long time, t_rules *rules)
 {
 	long long	i;
 
-	i = timestamp();
+	i = get_time();
 	while (!(rules->dead))
 	{
-		if ((timestamp() - i) >= time)
+		if ((get_time() - i) >= time)
 			break ;
 		usleep(50);
 	}
@@ -73,7 +73,7 @@ void	print_routine(t_rules *rules, int id, char *string)
 	pthread_mutex_lock(&(rules->state_write));
 	if (!(rules->dead))
 	{
-		printf("%lli ", timestamp() - rules->first_timestamp);
+		printf("%lli ", get_time() - rules->first_timestamp);
 		printf("%i ", id + 1);
 		printf("%s\n", string);
 	}

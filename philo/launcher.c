@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:15 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/28 12:38:17 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/28 12:43:17 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	philo_eats(t_philosopher *philo)
 	print_routine(rules, philo->id, "has taken a fork");
 	//pthread_mutex_lock(&(rules->meal_check));
 	print_routine(rules, philo->id, "is eating");
-	philo->t_last_meal = timestamp();
+	philo->t_last_meal = get_time();
 	//pthread_mutex_unlock(&(rules->meal_check));
 	(philo->x_ate)++;
 	philo_sleep(rules->time_to_eat, rules);
@@ -80,7 +80,7 @@ static void	is_dead(t_rules *r)
 		i = -1;
 		while (++i < r->number_of_philosophers && !(r->dead))
 		{
-			if (timestamp() - r->phi[i].t_last_meal > r->time_to_die)
+			if (get_time() - r->phi[i].t_last_meal > r->time_to_die)
 			{
 				print_routine(r, i, "died");
 				r->dead = 1;
@@ -103,12 +103,12 @@ int	launcher(t_rules *r)
 	int				i;
 
 	i = 0;
-	r->first_timestamp = timestamp();
+	r->first_timestamp = get_time();
 	while (i < r->number_of_philosophers)
 	{
 		if (pthread_create(&(r->phi[i].thread_id), NULL, routine, &(r->phi[i])))
 			return (0);
-		r->phi[i].t_last_meal = timestamp();
+		r->phi[i].t_last_meal = get_time();
 		i++;
 	}
 	is_dead(r);
