@@ -2,7 +2,7 @@ SRCS	=	main.c \
 			ft_error.c \
 			init.c \
 			utils.c \
-			launcher.c
+			threads.c
 
 OBJS	= $(SRCS:.c=.o)
 

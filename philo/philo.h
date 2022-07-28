@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:19:33 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/28 13:07:39 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:29:25 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 typedef struct s_philosopher
 {
 	int					id;
-	int					x_ate;
+	int					is_fed;
 	int					left_fork_id;
 	int					right_fork_id;
 	long long			t_last_meal;
@@ -32,13 +32,13 @@ typedef struct s_philosopher
 
 typedef struct s_rules
 {
-	int					number_of_philosophers;
+	int					nb_philo;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
-	int					number_of_philo_meals;
+	int					nb_meals;
 	int					dead;
-	int					all_ate;
+	int					all_fed;
 	long long			first_timestamp;
 	pthread_mutex_t		forks[250];
 	pthread_mutex_t		state_write;
@@ -53,7 +53,7 @@ size_t					ft_strlen(char const *str);
 int						ft_atoi(char const *str);
 void					print_routine(t_rules *rules, int id, char *string);
 long long				get_time(void);
-void					philo_sleep(long long time, t_rules *rules);
+void					better_usleep(long long time, t_rules *rules);
 
 int						launcher(t_rules *rules);
 

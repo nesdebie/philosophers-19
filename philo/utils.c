@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:40:26 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/28 13:08:20 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:28:45 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ long long	get_time(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void	philo_sleep(long long time, t_rules *rules)
+void	better_usleep(long long time, t_rules *rules)
 {
 	long long	i;
 
@@ -64,7 +64,7 @@ void	philo_sleep(long long time, t_rules *rules)
 	{
 		if ((get_time() - i) >= time)
 			break ;
-		usleep(50);
+		usleep(rules->nb_philo * 2);
 	}
 }
 
