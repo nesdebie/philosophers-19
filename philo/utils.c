@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:40:26 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/28 15:34:52 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/28 17:19:04 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ void	better_usleep(long long time, t_rules *rules)
 
 void	print_routine(t_rules *rules, int id, char *s)
 {
-	pthread_mutex_lock(&(rules->state_write));
 	if (!(rules->dead))
 		printf("%lli %i %s\n", get_time() - rules->first_timestamp, id + 1, s);
-	pthread_mutex_unlock(&(rules->state_write));
 }

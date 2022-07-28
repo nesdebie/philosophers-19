@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:19:33 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/28 15:29:25 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/28 17:19:09 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_rules
 	int					all_fed;
 	long long			first_timestamp;
 	pthread_mutex_t		forks[250];
-	pthread_mutex_t		state_write;
 	t_philosopher		phi[250];
 }						t_rules;
 
