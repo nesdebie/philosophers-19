@@ -6,7 +6,7 @@
 /*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:15 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/26 15:25:24 by nedebies         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:31:29 by nedebies         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static void	philo_eats(t_philosopher *philo)
 	print_routine(rules, philo->id, "is eating");
 	philo->t_last_meal = timestamp();
 	pthread_mutex_unlock(&(rules->meal_check));
-	pthread_mutex_unlock(&(rules->forks[philo->left_fork_id]));
-	pthread_mutex_unlock(&(rules->forks[philo->right_fork_id]));
 	(philo->x_ate)++;
 	philo_sleep(rules->time_to_eat, rules);
+	pthread_mutex_unlock(&(rules->forks[philo->left_fork_id]));
+	pthread_mutex_unlock(&(rules->forks[philo->right_fork_id]));
 }
 
 static void	*routine(void *void_philosopher)
