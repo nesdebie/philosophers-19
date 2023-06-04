@@ -1,10 +1,10 @@
 NAME	= philo
 
-SRCS	=	main.c \
-			ft_error.c \
-			init.c \
-			utils.c \
-			threads.c
+SRCS	=	./src/main.c \
+			./src/ft_error.c \
+			./src/init.c \
+			./src/utils.c \
+			./src/threads.c
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -14,7 +14,7 @@ FLAGS	= -Wall -Wextra -Werror
 
 INCLUDE	= -pthread -lpthread
 
-HEADER	= philo.h
+HEADER	= ./includes/philo.h
 
 all:	$(NAME)
 
