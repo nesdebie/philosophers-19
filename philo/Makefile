@@ -1,3 +1,5 @@
+NAME	= philo
+
 SRCS	=	main.c \
 			ft_error.c \
 			init.c \
@@ -6,9 +8,7 @@ SRCS	=	main.c \
 
 OBJS	= $(SRCS:.c=.o)
 
-NAME	= philo
-
-CC	= gcc
+CC	= cc
 
 FLAGS	= -Wall -Wextra -Werror
 

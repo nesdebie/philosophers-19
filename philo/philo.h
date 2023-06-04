@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/08 14:19:33 by nedebies          #+#    #+#             */
-/*   Updated: 2023/06/04 13:58:49 by nesdebie         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PHILO_H
 # define PHILO_H
 # include <sys/time.h>
@@ -18,6 +6,9 @@
 # include <stdlib.h>
 # include <string.h>
 # include <pthread.h>
+
+# define WRONG_ARGS 1
+# define MUTEX_FAIL 2
 
 typedef struct s_philosopher
 {

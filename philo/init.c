@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/11 17:41:20 by nedebies          #+#    #+#             */
-/*   Updated: 2023/06/04 13:57:45 by nesdebie         ###   ########.fr       */
+/*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
+/*   Updated: 2023/06/04 14:16:35 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,30 +44,30 @@ static int	init_philosophers(t_rules *rules)
 	return (0);
 }
 
-int	init_manager(t_rules *rules, char **argv)
+int	init_manager(t_rules *rules, char **av)
 {
-	rules->nb_philo = ft_atoi(argv[1]);
-	rules->time_to_die = ft_atoi(argv[2]);
-	rules->time_to_eat = ft_atoi(argv[3]);
-	rules->time_to_sleep = ft_atoi(argv[4]);
+	rules->nb_philo = ft_atoi(av[1]);
+	rules->time_to_die = ft_atoi(av[2]);
+	rules->time_to_eat = ft_atoi(av[3]);
+	rules->time_to_sleep = ft_atoi(av[4]);
 	rules->all_fed = 0;
 	rules->dead = 0;
 	if (rules->nb_philo < 1 || rules->time_to_die < 0)
-		return (1);
+		return (WRONG_ARGS);
 	if (rules->time_to_eat < 0 || rules->time_to_sleep < 0)
-		return (1);
+		return (WRONG_ARGS);
 	if (rules->nb_philo > 250)
-		return (1);
-	if (argv[5])
+		return (WRONG_ARGS);
+	if (av[5])
 	{
-		rules->nb_meals = ft_atoi(argv[5]);
+		rules->nb_meals = ft_atoi(av[5]);
 		if (rules->nb_meals <= 0)
-			return (1);
+			return (WRONG_ARGS);
 	}
 	else
 		rules->nb_meals = -1;
 	if (!init_mutex(rules))
-		return (2);
+		return (MUTEX_FAIL);
 	init_philosophers(rules);
 	return (0);
 }
