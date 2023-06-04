@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:19:33 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/28 17:19:09 by nedebies         ###   ########.fr       */
+/*   Updated: 2023/06/04 13:58:49 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_rules
 	int					dead;
 	int					all_fed;
 	long long			first_timestamp;
+	pthread_mutex_t		state_write;
 	pthread_mutex_t		forks[250];
 	t_philosopher		phi[250];
 }						t_rules;

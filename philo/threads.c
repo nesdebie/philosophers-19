@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:15 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/28 17:18:52 by nedebies         ###   ########.fr       */
+/*   Updated: 2023/06/04 13:59:56 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	ft_destroyer(t_rules *r)
 	i = -1;
 	while (++i < r->nb_philo)
 		pthread_mutex_destroy(&(r->forks[i]));
+	pthread_mutex_destroy(&(r->state_write));
 }
 
 static void	is_dead(t_rules *r)

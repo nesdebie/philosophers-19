@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nedebies <nedebies@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:41:20 by nedebies          #+#    #+#             */
-/*   Updated: 2022/07/28 17:18:28 by nedebies         ###   ########.fr       */
+/*   Updated: 2023/06/04 13:57:45 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	init_mutex(t_rules *rules)
 		if (pthread_mutex_init(&(rules->forks[i]), NULL))
 			return (0);
 	}
+	if (pthread_mutex_init(&(rules->state_write), NULL))
+		return (0);
 	return (1);
 }
 
