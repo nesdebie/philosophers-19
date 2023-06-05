@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/06/04 23:41:58 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/06/05 02:17:54 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ static int	init_mutex(t_rules *rules)
 {
 	int	i;
 
-	rules->forks = malloc(sizeof(*(rules->forks)) * rules->nb_philo);
-	if (!rules->forks)
-		return(0);
+	//rules->forks = malloc(sizeof(*(rules->forks)) * rules->nb_philo);
+	//if (!rules->forks)
+	//	return(0);
 	i = rules->nb_philo;
 	while (--i >= 0)
 	{
 		if (pthread_mutex_init(&(rules->forks[i]), NULL))
 		{
-			free (rules->forks);
+			//free (rules->forks);
 			return (0);
 		}
 	}
 	if (pthread_mutex_init(&(rules->state_write), NULL))
 	{
-		free (rules->forks);
+		//free (rules->forks);
 		return (0);
 	}
 	return (1);
@@ -75,14 +75,14 @@ int	init_manager(t_rules *rules, char **av)
 		rules->nb_meals = ft_atoi(av[5]);
 	else
 		rules->nb_meals = -1;
-	if (!rules_checker(rules, av[5]))
+	if (rules_checker(rules, av[5]))
 		return (WRONG_ARGS);
 	if (!init_mutex(rules))
 		return (MUTEX_FAIL);
-	rules->phi = malloc(sizeof(rules->phi) * rules->nb_philo);
+	//rules->phi = malloc(sizeof(rules->phi) * rules->nb_philo);
 	if (!rules->phi)
 	{
-		free(rules->forks);
+		//free(rules->forks);
 		return (MALLOC_FAIL);
 	}
 	init_philosophers(rules);
