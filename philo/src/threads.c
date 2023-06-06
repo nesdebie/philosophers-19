@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:17:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/06/05 02:19:44 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:32:37 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void	ft_destroyer(t_rules *r)
 	i = -1;
 	while (++i < r->nb_philo)
 		pthread_mutex_destroy(&(r->forks[i]));
-	//free (r->forks);
-	//free (r->phi);
+	free (r->forks);
+	free (r->phi);
 	pthread_mutex_destroy(&(r->state_write));
 }
 

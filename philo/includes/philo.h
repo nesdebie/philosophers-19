@@ -32,10 +32,8 @@ typedef struct s_rules
 	int					all_fed;
 	long long			first_timestamp;
 	pthread_mutex_t		state_write;
-	//pthread_mutex_t		*forks;
-	pthread_mutex_t		forks[250];
-	t_philosopher		phi[250];
-	//t_philosopher		*phi;
+	pthread_mutex_t		*forks;
+	t_philosopher		*phi;
 }						t_rules;
 
 int						ft_error(char *str);

@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/06/05 02:18:05 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:40:10 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	main(int ac, char **av)
 		return (ft_error("malloc() failed"));
 	if (!ft_create_threads(&rules))
 	{
-		//free (rules.forks);
-		//free (rules.phi);
+		free (rules.forks);
+		free (rules.phi);
 		return (ft_error("pthread_create() failed"));
 	}
 	return (0);
