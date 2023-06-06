@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
+/*   Updated: 2023/06/06 12:42:51 by nesdebie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 # include <sys/time.h>
@@ -10,6 +22,7 @@
 # define WRONG_ARGS 1
 # define MUTEX_FAIL 2
 # define MALLOC_FAIL 3
+
 typedef struct s_philosopher
 {
 	int					id;

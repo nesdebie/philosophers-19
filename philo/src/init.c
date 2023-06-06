@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/06/06 12:32:28 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:44:14 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	init_mutex(t_rules *rules)
 
 	rules->forks = malloc(sizeof(*(rules->forks)) * rules->nb_philo);
 	if (!rules->forks)
-		return(0);
+		return (0);
 	i = rules->nb_philo;
 	while (--i >= 0)
 	{
@@ -59,8 +59,8 @@ static int	rules_checker(t_rules *rules, char *fifth_arg)
 	if (rules->time_to_eat < 0 || rules->time_to_sleep < 0)
 		return (WRONG_ARGS);
 	if (fifth_arg && rules->nb_meals <= 0)
-			return (WRONG_ARGS);
-	return (0);	
+		return (WRONG_ARGS);
+	return (0);
 }
 
 int	init_manager(t_rules *rules, char **av)
