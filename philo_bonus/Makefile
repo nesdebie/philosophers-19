@@ -1,4 +1,4 @@
-NAME	= philo
+NAME	= philo_bonus
 
 SRCS	=	./src/main.c \
 			./src/ft_error.c \
@@ -14,7 +14,7 @@ FLAGS	= -Wall -Wextra -Werror
 
 INCLUDE	= -pthread -lpthread
 
-HEADER	= ./includes/philo.h
+HEADER	= ./includes/philo_bonus.h
 
 all:	$(NAME)
 

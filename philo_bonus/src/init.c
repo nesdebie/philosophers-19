@@ -6,11 +6,11 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/06/06 12:44:14 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/04 10:05:32 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
 static int	init_mutex(t_rules *rules)
 {
@@ -76,7 +76,7 @@ int	init_manager(t_rules *rules, char **av)
 	else
 		rules->nb_meals = -1;
 	if (rules_checker(rules, av[5]))
-		return (WRONG_ARGS);
+		return (WRONG_ARGS);//DIFF
 	if (!init_mutex(rules))
 		return (MUTEX_FAIL);
 	rules->phi = malloc(sizeof(rules->phi) * rules->nb_philo);

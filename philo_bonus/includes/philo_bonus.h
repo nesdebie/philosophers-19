@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/04 09:17:36 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/04 10:05:09 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <pthread.h>
 # include <fcntl.h>
 #include <sys/stat.h>
 #include <semaphore.h>
@@ -34,7 +33,7 @@ typedef struct s_philosopher
 	int					right_fork_id;
 	long long			t_last_meal;
 	struct s_rules		*rules;
-	pthread_t			thread_id;
+	sem_t				thread_id;
 }						t_philosopher;
 
 typedef struct s_rules
@@ -47,9 +46,9 @@ typedef struct s_rules
 	int					dead;
 	int					all_fed;
 	long long			first_timestamp;
-	pthread_mutex_t		state_write;
-	pthread_mutex_t		*forks;
-	t_philosopher		*phi;
+	sem_t				state_write;
+	sem_t				*forks;
+	t_philosopher		phi;
 }						t_rules;
 
 void					ft_error(char *str);
