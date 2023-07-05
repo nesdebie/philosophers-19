@@ -6,35 +6,11 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/04 10:05:32 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/05 16:55:14 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
-
-static int	init_mutex(t_rules *rules)
-{
-	int	i;
-
-	rules->forks = malloc(sizeof(*(rules->forks)) * rules->nb_philo);
-	if (!rules->forks)
-		return (0);
-	i = rules->nb_philo;
-	while (--i >= 0)
-	{
-		if (pthread_mutex_init(&(rules->forks[i]), NULL))
-		{
-			free (rules->forks);
-			return (0);
-		}
-	}
-	if (pthread_mutex_init(&(rules->state_write), NULL))
-	{
-		free (rules->forks);
-		return (0);
-	}
-	return (1);
-}
 
 static void	init_philosophers(t_rules *rules)
 {

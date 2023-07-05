@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/04 10:05:09 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/05 16:55:23 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,5 @@ int						ft_atoi(char const *str);
 void					print_routine(t_rules *rules, int id, char *string);
 long long				get_time(void);
 void					better_usleep(long long time, t_rules *rules);
-
-int						ft_create_threads(t_rules *rules);
 
 #endif
