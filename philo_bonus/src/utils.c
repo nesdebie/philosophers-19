@@ -6,72 +6,83 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/04 10:05:43 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:41:16 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-size_t	ft_strlen(char const *str)
+/* ft_strlen:
+*	Measures the length of a string.
+*/
+size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] != '\0')
 		i++;
 	return (i);
 }
 
-int	ft_atoi(char const *str)
+/* ft_strcat:
+*	Concatenates two strings.
+*/
+char	*ft_strcat(char	*dst, const char *src)
 {
-	int		i;
-	int		sign;
-	long	result;
+	size_t	i;
+	size_t	j;
 
-	result = 0;
 	i = 0;
-	sign = 1;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+	while (dst[i])
 		i++;
-	if (str[i] == 43 || str[i] == 45)
+	j = 0;
+	while (src[j])
 	{
-		if (str[i] == 45)
-			sign *= -1;
-		i++;
+		dst[i + j] = src[j];
+		j++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = result * 10 + str[i] - 48;
-		i++;
-	}
-	return ((int)(sign * result));
+	dst[i + j] = '\0';
+	return (dst);
 }
 
-long long	get_time(void)
+/* ft_utoa:
+*	Turns a unsigned integer into a string of characters. The length of
+*	the string must be calculated in advance and specified to this function.
+*/
+char	*ft_utoa(unsigned int nb, size_t len)
 {
-	struct timeval	t;
+	char	*ret;
 
-	gettimeofday(&t, NULL);
-	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
-}
-
-void	better_usleep(long long time, t_rules *rules)
-{
-	long long	i;
-
-	i = get_time();
-	while (!(rules->dead))
+	ret = malloc(sizeof * ret * (len + 1));
+	if (!ret)
+		return (NULL);
+	ret[len] = '\0';
+	len--;
+	while (nb % 10)
 	{
-		if ((get_time() - i) >= time)
-			break ;
-		usleep(rules->nb_philo * 2);
+		ret[len--] = (nb % 10) + '0';
+		nb /= 10;
 	}
+	return (ret);
 }
 
-void	print_routine(t_rules *rules, int id, char *s)
+void	unlink_global_sems(void)
 {
-	pthread_mutex_lock(&(rules->state_write));
-	if (!(rules->dead))
-		printf("%lli %i %s\n", get_time() - rules->first_timestamp, id + 1, s);
-	pthread_mutex_unlock(&(rules->state_write));
+	sem_unlink(SEM_NAME_FORKS);
+	sem_unlink(SEM_NAME_WRITE);
+	sem_unlink(SEM_NAME_FULL);
+	sem_unlink(SEM_NAME_DEAD);
+	sem_unlink(SEM_NAME_STOP);
+}
+
+bool	start_grim_reaper_threads(t_table *table)
+{
+	if (pthread_create(&table->gluttony_reaper, NULL,
+			&global_gluttony_reaper, table) != 0)
+		return (error_failure(STR_ERR_THREAD, NULL, table));
+	if (pthread_create(&table->famine_reaper, NULL,
+			&global_famine_reaper, table) != 0)
+		return (error_failure(STR_ERR_THREAD, NULL, table));
+	return (true);
 }
