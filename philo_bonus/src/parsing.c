@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:43:13 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:03:18 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:25:52 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 /* contains_only_digits:
 *	Checks if a string contains only digits 0 - 9.
-*	Returns true if the string only contains digits.
-*	Returns false if the string contains a character that is not a digit.
+*	Returns 1 if the string only contains digits.
+*	Returns 0 if the string contains a character that is not a digit.
 */
-static bool	contains_only_digits(char *str)
+static int	contains_only_digits(char *str)
 {
 	int	i;
 
@@ -25,10 +25,10 @@ static bool	contains_only_digits(char *str)
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (false);
+			return (0);
 		i++;
 	}
-	return (true);
+	return (1);
 }
 
 /* integer_atoi:
@@ -57,9 +57,9 @@ int	integer_atoi(char *str)
 *	Checks if all required arguments are valid, i.e. is a string of
 *	digits only, which does not exceed INT MAX. Also checks if the number
 *	of philosophers is valid (between 1 and MAX_PHILOS).
-*	Returns true if all arguments are valid, false if one of them is invalid.
+*	Returns 1 if all arguments are valid, 0 if one of them is invalid.
 */
-bool	is_valid_input(int ac, char **av)
+int	is_valid_input(int ac, char **av)
 {
 	int	i;
 	int	nb;
@@ -68,13 +68,13 @@ bool	is_valid_input(int ac, char **av)
 	while (i < ac)
 	{
 		if (!contains_only_digits(av[i]))
-			return (msg(STR_ERR_INPUT_DIGIT, av[i], false));
+			return (error_msg("%s invalid input: %s: not a valid unsigned integer between 0 and 2147483647.\n", av[i], 0));
 		nb = integer_atoi(av[i]);
 		if (i == 1 && (nb <= 0))
-			return (msg(STR_ERR_INPUT_POFLOW, "Too many philosophers", false));
+			return (error_msg("%s invalid input: there must be between 1 and %s philosophers.\n", "Too many philosophers", 0));
 		if (i != 1 && nb == -1)
-			return (msg(STR_ERR_INPUT_DIGIT, av[i], false));
+			return (error_msg("%s invalid input: %s: not a valid unsigned integer between 0 and 2147483647.\n", av[i], 0));
 		i++;
 	}
-	return (true);
+	return (1);
 }

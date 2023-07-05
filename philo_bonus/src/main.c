@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/05 23:54:23 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:27:10 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 /* has_simulation_stopped:
 *	Checks if the simulation is about to end.
-*	Returns true if the simulation must stop, false if not.
+*	Returns 1 if the simulation must stop, 0 if not.
 */
-bool	has_simulation_stopped(t_table *table)
+int	has_simulation_stopped(t_rules *rules)
 {
-	bool	ret;
+	int	ret;
 
-	sem_wait(table->sem_stop);
-	ret = table->stop_sim;
-	sem_post(table->sem_stop);
+	sem_wait(rules->sem_stop);
+	ret = rules->stop_sim;
+	sem_post(rules->sem_stop);
 	return (ret);
 }
 
@@ -33,32 +33,32 @@ bool	has_simulation_stopped(t_table *table)
 *	Also creates a grim reaper thread to monitor philosophers and detect
 *	if everyone has eaten enough.
 *
-*	Returns true if the simulation was successfully started, false if there
+*	Returns 1 if the simulation was successfully started, 0 if there
 *	was an error.
 */
-static bool	start_simulation(t_table *table)
+static int	start_simulation(t_rules *rules)
 {
 	unsigned int	i;
 	pid_t			pid;
 
-	table->start_time = get_time_in_ms() + ((table->nb_philos * 2) * 10);
+	rules->start_time = get_time_in_ms() + ((rules->nb_philos * 2) * 10);
 	i = -1;
-	while (++i < table->nb_philos)
+	while (++i < rules->nb_philos)
 	{
 		pid = fork();
 		if (pid == -1)
-			return (error_failure(STR_ERR_FORK, NULL, table));
+			return (error_failure("%s error: Could not fork child.\n", NULL, rules));
 		else if (pid > 0)
-			table->pids[i] = pid;
+			rules->pids[i] = pid;
 		else if (pid == 0)
 		{
-			table->this_philo = table->philos[i];
-			philosopher(table);
+			rules->this_philo = rules->philos[i];
+			philosopher(rules);
 		}
 	}
-	if (start_grim_reaper_threads(table) == false)
-		return (false);
-	return (true);
+	if (start_grim_reaper_threads(rules) == 0)
+		return (0);
+	return (1);
 }
 
 /* get_child_philo:
@@ -66,7 +66,7 @@ static bool	start_simulation(t_table *table)
 *	exits with an error or a dead philosopher, sends the signal to
 *	kill all other child processes.
 */
-static int	get_child_philo(t_table *table, pid_t *pid)
+static int	get_child_philo(t_rules *rules, pid_t *pid)
 {
 	int	philo_exit_code;
 	int	exit_code;
@@ -77,13 +77,13 @@ static int	get_child_philo(t_table *table, pid_t *pid)
 		{
 			exit_code = WEXITSTATUS(philo_exit_code);
 			if (exit_code == CHILD_EXIT_PHILO_DEAD)
-				return (kill_all_philos(table, 1));
+				return (kill_all_philos(rules, 1));
 			if (exit_code == CHILD_EXIT_ERR_PTHREAD
 				|| exit_code == CHILD_EXIT_ERR_SEM)
-				return (kill_all_philos(table, -1));
+				return (kill_all_philos(rules, -1));
 			if (exit_code == CHILD_EXIT_PHILO_FULL)
 			{
-				table->philo_full_count += 1;
+				rules->philo_full_count += 1;
 				return (1);
 			}
 		}
@@ -97,25 +97,25 @@ static int	get_child_philo(t_table *table, pid_t *pid)
 *	Ends the simulation when one of the end conditions are fulfilled:
 *	when a philosopher dies or when all philosophers have eaten enough.
 */
-static int	stop_simulation(t_table	*table)
+static int	stop_simulation(t_rules	*rules)
 {
 	unsigned int	i;
 	int				exit_code;
 
-	sim_start_delay(table->start_time);
-	while (has_simulation_stopped(table) == false)
+	sim_start_delay(rules->start_time);
+	while (has_simulation_stopped(rules) == 0)
 	{
 		i = 0;
-		while (i < table->nb_philos)
+		while (i < rules->nb_philos)
 		{
-			exit_code = get_child_philo(table, &table->pids[i]);
+			exit_code = get_child_philo(rules, &rules->pids[i]);
 			if (exit_code == 1 || exit_code == -1)
 			{
-				sem_wait(table->sem_stop);
-				table->stop_sim = true;
-				sem_post(table->sem_philo_full);
-				sem_post(table->sem_philo_dead);
-				sem_post(table->sem_stop);
+				sem_wait(rules->sem_stop);
+				rules->stop_sim = 1;
+				sem_post(rules->sem_philo_full);
+				sem_post(rules->sem_philo_dead);
+				sem_post(rules->sem_stop);
 				return (exit_code);
 			}
 			i++;
@@ -129,21 +129,21 @@ static int	stop_simulation(t_table	*table)
 */
 int	main(int ac, char **av)
 {
-	t_table	*table;
+	t_rules	*rules;
 
-	table = NULL;
-	if (ac - 1 < 4 || ac - 1 > 5)
-		return (msg(STR_USAGE, NULL, EXIT_FAILURE));
+	rules = NULL;
+	if (ac < 5 || ac > 6)
+		return (error_msg("Wrong amount of arguments (min. 5 to 6)", NULL, EXIT_FAILURE));
 	if (!is_valid_input(ac, av))
 		return (EXIT_FAILURE);
-	table = init_table(ac, av, 1);
-	if (!table)
+	rules = init_rules(ac, av, 1);
+	if (!rules)
 		return (EXIT_FAILURE);
-	if (!start_simulation(table))
+	if (!start_simulation(rules))
 		return (EXIT_FAILURE);
-	if (stop_simulation(table) == -1)
-		return (table_cleanup(table, EXIT_FAILURE));
-	if (table->must_eat_count >= 0)
-		write_outcome(table);
-	return (table_cleanup(table, EXIT_SUCCESS));
+	if (stop_simulation(rules) == -1)
+		return (rules_cleanup(rules, EXIT_FAILURE));
+	if (rules->must_eat_count >= 0)
+		write_outcome(rules);
+	return (rules_cleanup(rules, EXIT_SUCCESS));
 }

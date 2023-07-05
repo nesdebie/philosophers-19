@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:15:42 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/05 23:59:39 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:11:40 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 */
 void	print_status(t_philo *philo, char *str)
 {
-	printf("%ld %d %s\n", get_time_in_ms() - philo->table->start_time,
+	printf("%ld %d %s\n", get_time_in_ms() - philo->rules->start_time,
 		philo->id + 1, str);
 }
 
@@ -30,7 +30,7 @@ void	print_status(t_philo *philo, char *str)
 *	the message is displayed in the terminal, to avoid any status messages
 *	being displayed after a philosopher has died.
 */
-void	write_status(t_philo *philo, bool reaper_report, t_status status)
+void	write_status(t_philo *philo, int reaper_report, t_status status)
 {
 	sem_wait(philo->sem_write);
 	if (status == DIED)
@@ -51,13 +51,13 @@ void	write_status(t_philo *philo, bool reaper_report, t_status status)
 *	Prints the outcome of the simulation if a number of times to
 *	eat was specified. Only used for debug purposes.
 */
-void	write_outcome(t_table *table)
+void	write_outcome(t_rules *rules)
 {
-	sem_post(table->sem_write);
-	sem_wait(table->sem_write);
+	sem_post(rules->sem_write);
+	sem_wait(rules->sem_write);
 	printf("%d/%d philosophers had at least %d meals.\n",
-		table->philo_full_count, table->nb_philos, table->must_eat_count);
-	sem_post(table->sem_write);
+		rules->philo_full_count, rules->nb_philos, rules->must_eat_count);
+	sem_post(rules->sem_write);
 	return ;
 }
 

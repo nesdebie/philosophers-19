@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/05 23:55:08 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:21:13 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ static void	eat_sleep_routine(t_philo *philo)
 {
 	grab_fork(philo);
 	grab_fork(philo);
-	write_status(philo, false, EATING);
+	write_status(philo, 0, EATING);
 	sem_wait(philo->sem_meal);
 	philo->last_meal = get_time_in_ms();
 	sem_post(philo->sem_meal);
-	philo_sleep(philo->table->time_to_eat);
-	write_status(philo, false, SLEEPING);
+	philo_sleep(philo->rules->time_to_eat);
+	write_status(philo, 0, SLEEPING);
 	sem_post(philo->sem_forks);
 	sem_post(philo->sem_forks);
 	sem_wait(philo->sem_meal);
 	philo->nb_forks_held -= 2;
 	philo->times_ate += 1;
 	sem_post(philo->sem_meal);
-	philo_sleep(philo->table->time_to_sleep);
+	philo_sleep(philo->rules->time_to_sleep);
 }
 
 /* think_routine:
@@ -46,23 +46,23 @@ static void	eat_sleep_routine(t_philo *philo)
 *	This helps stagger philosopher's eating routines to avoid forks being
 *	needlessly monopolized by one philosopher to the detriment of others.
 */
-static void	think_routine(t_philo *philo, bool silent)
+static void	think_routine(t_philo *philo, int silent)
 {
 	time_t	time_to_think;
 
 	sem_wait(philo->sem_meal);
-	time_to_think = (philo->table->time_to_die
+	time_to_think = (philo->rules->time_to_die
 			- (get_time_in_ms() - philo->last_meal)
-			- philo->table->time_to_eat) / 2;
+			- philo->rules->time_to_eat) / 2;
 	sem_post(philo->sem_meal);
 	if (time_to_think < 0)
 		time_to_think = 0;
-	if (time_to_think == 0 && silent == true)
+	if (time_to_think == 0 && silent == 1)
 		time_to_think = 1;
 	if (time_to_think > 600)
 		time_to_think = 200;
-	if (silent == false)
-		write_status(philo, false, THINKING);
+	if (silent == 0)
+		write_status(philo, 0, THINKING);
 	philo_sleep(time_to_think);
 }
 
@@ -75,21 +75,21 @@ static void	think_routine(t_philo *philo, bool silent)
 */
 static void	lone_philo_routine(t_philo *philo)
 {
-	philo->sem_philo_full = sem_open(SEM_NAME_FULL, O_CREAT,
-			S_IRUSR | S_IWUSR, philo->table->nb_philos);
+	philo->sem_philo_full = sem_open("fed", O_CREAT,
+			S_IRUSR | S_IWUSR, philo->rules->nb_philos);
 	if (philo->sem_philo_full == SEM_FAILED)
 		exit(CHILD_EXIT_ERR_SEM);
 	sem_wait(philo->sem_philo_full);
-	sim_start_delay(philo->table->start_time);
-	if (philo->table->must_eat_count == 0)
+	sim_start_delay(philo->rules->start_time);
+	if (philo->rules->must_eat_count == 0)
 	{
 		sem_post(philo->sem_philo_full);
 		exit(CHILD_EXIT_PHILO_FULL);
 	}
 	print_status(philo, "has taken a fork");
-	philo_sleep(philo->table->time_to_die);
+	philo_sleep(philo->rules->time_to_die);
 	print_status(philo, "died");
-	free_table(philo->table);
+	free_rules(philo->rules);
 	exit(CHILD_EXIT_PHILO_DEAD);
 }
 
@@ -100,11 +100,11 @@ static void	lone_philo_routine(t_philo *philo)
 static void	philosopher_routine(t_philo *philo)
 {
 	if (philo->id % 2)
-		think_routine(philo, true);
+		think_routine(philo, 1);
 	while (1)
 	{
 		eat_sleep_routine(philo);
-		think_routine(philo, false);
+		think_routine(philo, 0);
 	}
 }
 
@@ -115,27 +115,27 @@ static void	philosopher_routine(t_philo *philo)
 *	meal time by a small margin. This allows odd-id philosophers to
 *	grab both of their forks first, avoiding deadlocks.
 */
-void	philosopher(t_table *table)
+void	philosopher(t_rules *rules)
 {
 	t_philo	*philo;
 
-	philo = table->this_philo;
-	if (philo->table->nb_philos == 1)
+	philo = rules->this_philo;
+	if (philo->rules->nb_philos == 1)
 		lone_philo_routine(philo);
-	init_philo_ipc(table, philo);
-	if (philo->table->must_eat_count == 0)
+	init_philo_ipc(rules, philo);
+	if (philo->rules->must_eat_count == 0)
 	{
 		sem_post(philo->sem_philo_full);
-		child_exit(table, CHILD_EXIT_PHILO_FULL);
+		child_exit(rules, CHILD_EXIT_PHILO_FULL);
 	}
-	if (philo->table->time_to_die == 0)
+	if (philo->rules->time_to_die == 0)
 	{
 		sem_post(philo->sem_philo_dead);
-		child_exit(table, CHILD_EXIT_PHILO_DEAD);
+		child_exit(rules, CHILD_EXIT_PHILO_DEAD);
 	}
 	sem_wait(philo->sem_meal);
-	philo->last_meal = philo->table->start_time;
+	philo->last_meal = philo->rules->start_time;
 	sem_post(philo->sem_meal);
-	sim_start_delay(philo->table->start_time);
+	sim_start_delay(philo->rules->start_time);
 	philosopher_routine(philo);
 }

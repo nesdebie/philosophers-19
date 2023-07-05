@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/05 23:41:16 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:24:28 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (str[i] != 0)
 		i++;
 	return (i);
 }
@@ -42,7 +42,7 @@ char	*ft_strcat(char	*dst, const char *src)
 		dst[i + j] = src[j];
 		j++;
 	}
-	dst[i + j] = '\0';
+	dst[i + j] = 0;
 	return (dst);
 }
 
@@ -57,7 +57,7 @@ char	*ft_utoa(unsigned int nb, size_t len)
 	ret = malloc(sizeof * ret * (len + 1));
 	if (!ret)
 		return (NULL);
-	ret[len] = '\0';
+	ret[len] = 0;
 	len--;
 	while (nb % 10)
 	{
@@ -69,20 +69,20 @@ char	*ft_utoa(unsigned int nb, size_t len)
 
 void	unlink_global_sems(void)
 {
-	sem_unlink(SEM_NAME_FORKS);
-	sem_unlink(SEM_NAME_WRITE);
-	sem_unlink(SEM_NAME_FULL);
-	sem_unlink(SEM_NAME_DEAD);
-	sem_unlink(SEM_NAME_STOP);
+	sem_unlink("forks");
+	sem_unlink("write");
+	sem_unlink("fed");
+	sem_unlink("dead");
+	sem_unlink("stop");
 }
 
-bool	start_grim_reaper_threads(t_table *table)
+int	start_grim_reaper_threads(t_rules *rules)
 {
-	if (pthread_create(&table->gluttony_reaper, NULL,
-			&global_gluttony_reaper, table) != 0)
-		return (error_failure(STR_ERR_THREAD, NULL, table));
-	if (pthread_create(&table->famine_reaper, NULL,
-			&global_famine_reaper, table) != 0)
-		return (error_failure(STR_ERR_THREAD, NULL, table));
-	return (true);
+	if (pthread_create(&rules->gluttony_reaper, NULL,
+			&global_gluttony_reaper, rules) != 0)
+		return (error_failure("%s error: Could not create thread.\n", NULL, rules));
+	if (pthread_create(&rules->famine_reaper, NULL,
+			&global_famine_reaper, rules) != 0)
+		return (error_failure("%s error: Could not create thread.\n", NULL, rules));
+	return (1);
 }
