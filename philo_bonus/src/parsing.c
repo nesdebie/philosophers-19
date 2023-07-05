@@ -6,11 +6,11 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:43:13 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/05 23:43:27 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:03:18 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "../includes/philo_bonus.h"
 
 /* contains_only_digits:
 *	Checks if a string contains only digits 0 - 9.
@@ -70,8 +70,8 @@ bool	is_valid_input(int ac, char **av)
 		if (!contains_only_digits(av[i]))
 			return (msg(STR_ERR_INPUT_DIGIT, av[i], false));
 		nb = integer_atoi(av[i]);
-		if (i == 1 && (nb <= 0 || nb > MAX_PHILOS))
-			return (msg(STR_ERR_INPUT_POFLOW, STR_MAX_PHILOS, false));
+		if (i == 1 && (nb <= 0))
+			return (msg(STR_ERR_INPUT_POFLOW, "Too many philosophers", false));
 		if (i != 1 && nb == -1)
 			return (msg(STR_ERR_INPUT_DIGIT, av[i], false));
 		i++;

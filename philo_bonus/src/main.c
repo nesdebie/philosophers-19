@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/05 23:40:36 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:54:23 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	if (stop_simulation(table) == -1)
 		return (table_cleanup(table, EXIT_FAILURE));
-	if (DEBUG_FORMATTING == 1 && table->must_eat_count >= 0)
+	if (table->must_eat_count >= 0)
 		write_outcome(table);
 	return (table_cleanup(table, EXIT_SUCCESS));
 }

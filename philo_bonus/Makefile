@@ -1,10 +1,16 @@
 NAME	= philo_bonus
 
 SRCS	=	./src/main.c \
-			./src/ft_error.c \
+			./src/errors.c \
 			./src/init.c \
 			./src/utils.c \
-			./src/threads.c
+			./src/ft_kill.c \
+			./src/ft_print_events.c \
+			./src/parsing.c \
+			./src/philo.c \
+			./src/philo_utils.c \
+			./src/process_comm.c \
+			./src/time.c
 
 OBJS	= $(SRCS:.c=.o)
 

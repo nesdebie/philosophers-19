@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/05 23:46:04 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:55:08 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,9 @@ static void	lone_philo_routine(t_philo *philo)
 		sem_post(philo->sem_philo_full);
 		exit(CHILD_EXIT_PHILO_FULL);
 	}
-	if (DEBUG_FORMATTING == true)
-		print_status_debug(philo, PURPLE, "has taken a fork", GOT_FORK_1);
-	else
-		print_status(philo, "has taken a fork");
+	print_status(philo, "has taken a fork");
 	philo_sleep(philo->table->time_to_die);
-	if (DEBUG_FORMATTING == true)
-		print_status_debug(philo, RED, "died", DIED);
-	else
-		print_status(philo, "died");
+	print_status(philo, "died");
 	free_table(philo->table);
 	exit(CHILD_EXIT_PHILO_DEAD);
 }

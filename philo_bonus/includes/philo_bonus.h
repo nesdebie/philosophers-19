@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/05 23:40:01 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:01:55 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,6 @@
 /******************************************************************************
 *                                     Macros                                  *
 ******************************************************************************/
-
-# define MAX_PHILOS	250
-# define STR_MAX_PHILOS "250"
-
-# ifndef DEBUG_FORMATTING
-#  define DEBUG_FORMATTING 0
-# endif
-
-# define NC		"\e[0m"
-# define RED	"\e[31m"
-# define GREEN	"\e[32m"
-# define PURPLE	"\e[35m"
-# define CYAN	"\e[36m"
 
 # define STR_PROG_NAME	"philo:"
 # define STR_USAGE	"%s usage: ./philo <number_of_philosophers> \
@@ -127,56 +114,42 @@ typedef enum e_status
 *                           Function Prototypes                               *
 ******************************************************************************/
 
-//	main.c
 bool			has_simulation_stopped(t_table *table);
 
-//	parsing.c
 bool			is_valid_input(int ac, char **av);
 int				integer_atoi(char *str);
 
-//	init.c
 t_table			*init_table(int ac, char **av, int i);
 
-// ipc.c
 void			init_philo_ipc(t_table *table, t_philo *philo);
 
-//	philosopher.c
 void			philosopher(t_table *table);
 
-// philosopher_utils.c
 void			grab_fork(t_philo *philo);
 
-//	time.c
 time_t			get_time_in_ms(void);
 void			philo_sleep(time_t sleep_time);
 void			sim_start_delay(time_t start_time);
 
-//	output.c
 void			write_status(t_philo *philo, bool reaper, t_status status);
 void			print_status(t_philo *philo, char *str);
-void			print_status_debug(t_philo *philo, char *color, char *str,
-					t_status status);
 void			write_outcome(t_table *table);
 
-//	grim_reaper.c
 void			*global_gluttony_reaper(void *data);
 void			*global_famine_reaper(void *data);
 void			*personal_grim_reaper(void *data);
 int				kill_all_philos(t_table *table, int exit_code);
 
-// utils.c
 char			*ft_utoa(unsigned int nb, size_t len);
 char			*ft_strcat(char	*dst, const char *src);
 size_t			ft_strlen(const char *str);
 void			unlink_global_sems(void);
 bool			start_grim_reaper_threads(t_table *table);
 
-// cleanup.c
 void			*free_table(t_table *table);
 int				sem_error_cleanup(t_table *table);
 int				table_cleanup(t_table *table, int exit_code);
 
-//	exit.c
 void			child_exit(t_table *table, int exit_code);
 int				msg(char *str, char *detail, int exit_no);
 int				error_failure(char *str, char *details, t_table *table);
