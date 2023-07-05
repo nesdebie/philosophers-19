@@ -6,18 +6,12 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:21:13 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:41:09 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-/* eat_sleep_routine:
-*	When a philosopher is ready to eat, he will try to acquire fork semaphores.
-*	Then the philosopher will eat for a certain amount of time. The time of
-*	the last meal is recorded at the beginning of the meal, not at the end,
-*	as per the subject's requirements.
-*/
 static void	eat_sleep_routine(t_philo *philo)
 {
 	grab_fork(philo);
@@ -37,15 +31,6 @@ static void	eat_sleep_routine(t_philo *philo)
 	philo_sleep(philo->rules->time_to_sleep);
 }
 
-/* think_routine:
-*	Once a philosopher is done sleeping, he will think for a certain
-*	amount of time before starting to eat again.
-*	The time_to_think is calculated depending on how long it has been
-*	since the philosopher's last meal, the time_to_eat and the time_to_die
-*	to determine when the philosopher will be hungry again.
-*	This helps stagger philosopher's eating routines to avoid forks being
-*	needlessly monopolized by one philosopher to the detriment of others.
-*/
 static void	think_routine(t_philo *philo, int silent)
 {
 	time_t	time_to_think;
@@ -66,13 +51,6 @@ static void	think_routine(t_philo *philo, int silent)
 	philo_sleep(time_to_think);
 }
 
-/* lone_philo_routine:
-*	This routine is invoked when there is only a single philosopher.
-*	A single philosopher only has one fork, and so cannot eat. The
-*	philosopher will pick up that fork, wait as long as time_to_die and die.
-*	This is a separate routine to make sure that the process does not get
-*	stuck waiting for a fork or a writing semaphore that will never unlock.
-*/
 static void	lone_philo_routine(t_philo *philo)
 {
 	philo->sem_philo_full = sem_open("fed", O_CREAT,
@@ -93,10 +71,6 @@ static void	lone_philo_routine(t_philo *philo)
 	exit(CHILD_EXIT_PHILO_DEAD);
 }
 
-/* philosopher_routine:
-*	Runs the philosopher process' routine as long as the philosopher
-*	is alive. The philosopher will eat, sleep and think.
-*/
 static void	philosopher_routine(t_philo *philo)
 {
 	if (philo->id % 2)
@@ -108,13 +82,6 @@ static void	philosopher_routine(t_philo *philo)
 	}
 }
 
-/* philosopher:
-*	The philosopher thread routine. The philosopher must eat, sleep
-*	and think. In order to avoid conflicts between philosopher processes,
-*	philosophers with an even id start by thinking, which delays their
-*	meal time by a small margin. This allows odd-id philosophers to
-*	grab both of their forks first, avoiding deadlocks.
-*/
 void	philosopher(t_rules *rules)
 {
 	t_philo	*philo;

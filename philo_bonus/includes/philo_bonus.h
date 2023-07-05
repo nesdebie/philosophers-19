@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:26:12 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:39:04 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void			sim_start_delay(time_t start_time);
 
 void			write_status(t_philo *philo, int reaper, t_status status);
 void			print_status(t_philo *philo, char *str);
-void			write_outcome(t_rules *rules);
 
 void			*global_gluttony_reaper(void *data);
 void			*global_famine_reaper(void *data);
@@ -119,7 +118,7 @@ int				rules_cleanup(t_rules *rules, int exit_code);
 
 void			child_exit(t_rules *rules, int exit_code);
 int				error_msg(char *str, char *detail, int exit_no);
-int				error_failure(char *str, char *details, t_rules *rules);
+int				ft_error(char *str, char *details, t_rules *rules);
 void			*error_null(char *str, char *details, t_rules *rules);
 
 #endif

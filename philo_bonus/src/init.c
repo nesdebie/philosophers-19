@@ -6,21 +6,12 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:24:03 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:39:57 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-/* set_local_sem_name:
-*	Creates a unique semaphore name to create a mutex that protects
-*	a philosopher's own meal variables. The name must be unique, otherwise
-*	all philosopher processes would share the same meal semaphore.
-*	In order to create this semaphore name, simply concatenate the standard
-*	semaphore meal name with the philosopher's ID.
-*	Returns the unique semaphore name with the given ID. NULL if memory
-*	allocation fails.
-*/
 static char	*set_local_sem_name(const char *str, unsigned int id)
 {
 	unsigned int	i;
@@ -47,11 +38,6 @@ static char	*set_local_sem_name(const char *str, unsigned int id)
 	return (sem_name);
 }
 
-/* set_philo_sem_names:
-*	Creates unique semaphore names for semaphores that will only be shared
-*	between a philo process and its personal grim reaper thread. No other
-*	process will open the semaphores belonging to a different philo process.
-*/
 static int	set_philo_sem_names(t_philo *philo)
 {
 	philo->sem_meal_name = set_local_sem_name("meal_", philo->id + 1);
@@ -60,15 +46,6 @@ static int	set_philo_sem_names(t_philo *philo)
 	return (1);
 }
 
-/* init_philosophers:
-*	Allocates memory for each philosopher and initializes their values.
-*	Also creates specific semaphore names to protect their own meal-related
-*	variables. The semaphore names for sem_meal must be unique to each
-*	philosopher because the semaphore shouldn't be accessed by a different
-*	philosopher process.
-*	Returns a pointer to the array of philosophers or NULL if
-*	initialization failed.
-*/
 static t_philo	**init_philosophers(t_rules *rules)
 {
 	t_philo			**philos;
@@ -76,17 +53,17 @@ static t_philo	**init_philosophers(t_rules *rules)
 
 	philos = malloc(sizeof(t_philo) * (rules->nb_philos + 1));
 	if (!philos)
-		return (error_null("%s error: Could not allocate memory.\n", NULL, 0));
+		return (error_null("%sCould not allocate memory.\n", NULL, 0));
 	i = 0;
 	while (i < rules->nb_philos)
 	{
 		philos[i] = malloc(sizeof(t_philo));
 		if (!philos[i])
-			return (error_null("%s error: Could not allocate memory.\n", NULL, 0));
+			return (error_null("%sCould not allocate memory.\n", NULL, 0));
 		philos[i]->rules = rules;
 		philos[i]->id = i;
 		if (!set_philo_sem_names(philos[i]))
-			return (error_null("%s error: Could not allocate memory.\n", NULL, rules));
+			return (error_null("%sCould not allocate memory.\n", NULL, rules));
 		philos[i]->times_ate = 0;
 		philos[i]->nb_forks_held = 0;
 		philos[i]->ate_enough = 0;
@@ -95,15 +72,6 @@ static t_philo	**init_philosophers(t_rules *rules)
 	return (philos);
 }
 
-/* init_global_semaphores:
-*	Initializes semaphores for forks, writing, fullness and death detection.
-*	These sempahores are first opened in the parent process, but each child
-*	process will open the same named semaphores, which will allow interprocess
-*	communication through these semaphores.
-*
-*	Returns 1 if the initalizations were successful, 0 if
-*	initilization failed.
-*/
 static int	init_global_semaphores(t_rules *rules)
 {
 	unlink_global_sems();
@@ -130,19 +98,13 @@ static int	init_global_semaphores(t_rules *rules)
 	return (1);
 }
 
-/* init_rules:
-*	Initializes the "dining rules", the data structure containing
-*	all of the program's parameters.
-*	Returns a pointer to the allocated rules structure, or NULL if
-*	an error occured during initialization.
-*/
 t_rules	*init_rules(int ac, char **av, int i)
 {
 	t_rules	*rules;
 
 	rules = malloc(sizeof(t_rules) * 1);
 	if (!rules)
-		return (error_null("%s error: Could not allocate memory.\n", NULL, 0));
+		return (error_null("%sCould not allocate memory.\n", NULL, 0));
 	rules->nb_philos = integer_atoi(av[i++]);
 	rules->time_to_die = integer_atoi(av[i++]);
 	rules->time_to_eat = integer_atoi(av[i++]);
@@ -159,6 +121,6 @@ t_rules	*init_rules(int ac, char **av, int i)
 		return (NULL);
 	rules->pids = malloc(sizeof * rules->pids * rules->nb_philos);
 	if (!rules->pids)
-		return (error_null("%s error: Could not allocate memory.\n", NULL, 0));
+		return (error_null("%sCould not allocate memory.\n", NULL, 0));
 	return (rules);
 }

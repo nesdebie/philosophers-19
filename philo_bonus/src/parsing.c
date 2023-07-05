@@ -6,17 +6,12 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:43:13 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:25:52 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:40:28 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-/* contains_only_digits:
-*	Checks if a string contains only digits 0 - 9.
-*	Returns 1 if the string only contains digits.
-*	Returns 0 if the string contains a character that is not a digit.
-*/
 static int	contains_only_digits(char *str)
 {
 	int	i;
@@ -31,11 +26,6 @@ static int	contains_only_digits(char *str)
 	return (1);
 }
 
-/* integer_atoi:
-*	Converts a digit-only string into a positive integer.
-*	Returns the converted number between 0 and INT MAX.
-*	Returns -1 if the converted number exceeds INT MAX.
-*/
 int	integer_atoi(char *str)
 {
 	unsigned long long int	nb;
@@ -53,12 +43,6 @@ int	integer_atoi(char *str)
 	return ((int)nb);
 }
 
-/* is_valid_input:
-*	Checks if all required arguments are valid, i.e. is a string of
-*	digits only, which does not exceed INT MAX. Also checks if the number
-*	of philosophers is valid (between 1 and MAX_PHILOS).
-*	Returns 1 if all arguments are valid, 0 if one of them is invalid.
-*/
 int	is_valid_input(int ac, char **av)
 {
 	int	i;

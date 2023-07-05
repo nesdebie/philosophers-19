@@ -6,16 +6,12 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:44:45 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/05 23:45:13 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:41:25 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-/* get_time_in_ms:
-*	Gets the current time in miliseconds since the Epoch (1970-01-01 00:00:00).
-*	Returns the time value.
-*/
 time_t	get_time_in_ms(void)
 {
 	struct timeval		tv;
@@ -24,9 +20,6 @@ time_t	get_time_in_ms(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-/* philo_sleep:
-*	Pauses the philosopher process for a certain amount of time in miliseconds.
-*/
 void	philo_sleep(time_t sleep_time)
 {
 	time_t	wake_up;
@@ -38,12 +31,6 @@ void	philo_sleep(time_t sleep_time)
 	}
 }
 
-/* sim_start_delay:
-*	Waits for a small delay at the beginning of each process execution
-*	so that all processes start at the same time with the same start time
-*	reference. This ensures all processes and the grim reaper threads are
-*	synchronized.
-*/
 void	sim_start_delay(time_t start_time)
 {
 	while (get_time_in_ms() < start_time)

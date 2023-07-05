@@ -6,18 +6,12 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:47:54 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:11:40 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:37:38 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-/* kill_all_philos:
-*	Sends the kill signal to all philosopher processes. Used to send the
-*	simulation if a philosopher has died or if a philosopher process has
-*	encountered a fatal error.
-*	Returns the given exit code.
-*/
 int	kill_all_philos(t_rules *rules, int exit_code)
 {
 	unsigned int	i;
@@ -31,12 +25,6 @@ int	kill_all_philos(t_rules *rules, int exit_code)
 	return (exit_code);
 }
 
-/* global_gluttony_reaper:
-*	Kills all philosophers if each one has eaten enough. Each philosopher
-*	process decrements the sem_philo_full semaphore. This thread registers
-*	those decrementations to count how many philosophers have eaten enough.
-*	If all philos have eaten enough, kills all philos to end simulation.
-*/
 void	*global_gluttony_reaper(void *data)
 {
 	t_rules	*rules;
@@ -64,12 +52,6 @@ void	*global_gluttony_reaper(void *data)
 	return (NULL);
 }
 
-/* global_famine_reaper:
-*	Kills all philosophers if one has died. Each philosopher
-*	process decrements the sem_philo_dead semaphore upon philo death.
-*	This thread registers the first decrementation and kills all philos
-*	immediately.
-*/
 void	*global_famine_reaper(void *data)
 {
 	t_rules	*rules;
@@ -91,14 +73,6 @@ void	*global_famine_reaper(void *data)
 	return (NULL);
 }
 
-/* end_condition_reached:
-*	Checks this philosopher to see if one of two end conditions
-*	has been reached. If the philosopher has died, decrements a semaphore
-*	that will trigger "famine reaper" to kill all philos.
-*	If the philosopher has eaten enough, decrements a semaphore that
-*	will trigger "gluttony_reaper" to increase philo_full_count.
-*	Returns 0 if the philosopher is alive.
-*/
 static int	end_condition_reached(t_rules *rules, t_philo *philo)
 {
 	sem_wait(philo->sem_meal);
@@ -119,10 +93,6 @@ static int	end_condition_reached(t_rules *rules, t_philo *philo)
 	return (0);
 }
 
-/* personal_grim_reaper:
-*	The grim reaper thread's routine. Checks if this philosopher must
-*	be killed and if he ate enough.
-*/
 void	*personal_grim_reaper(void *data)
 {
 	t_rules			*rules;

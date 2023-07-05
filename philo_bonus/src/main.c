@@ -6,16 +6,12 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:27:10 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:40:16 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-/* has_simulation_stopped:
-*	Checks if the simulation is about to end.
-*	Returns 1 if the simulation must stop, 0 if not.
-*/
 int	has_simulation_stopped(t_rules *rules)
 {
 	int	ret;
@@ -26,16 +22,6 @@ int	has_simulation_stopped(t_rules *rules)
 	return (ret);
 }
 
-/* start_simulation:
-*	Launches the simulation by creating a new child process for each
-*	philosopher. The process ids are recorded to be able to wait for each
-*	child in turn, and send them a kill signal if need be.
-*	Also creates a grim reaper thread to monitor philosophers and detect
-*	if everyone has eaten enough.
-*
-*	Returns 1 if the simulation was successfully started, 0 if there
-*	was an error.
-*/
 static int	start_simulation(t_rules *rules)
 {
 	unsigned int	i;
@@ -47,7 +33,7 @@ static int	start_simulation(t_rules *rules)
 	{
 		pid = fork();
 		if (pid == -1)
-			return (error_failure("%s error: Could not fork child.\n", NULL, rules));
+			return (ft_error("%sCould not fork child.\n", NULL, rules));
 		else if (pid > 0)
 			rules->pids[i] = pid;
 		else if (pid == 0)
@@ -61,11 +47,6 @@ static int	start_simulation(t_rules *rules)
 	return (1);
 }
 
-/* get_child_philo:
-*	Waits for a philosopher process to exit. If the philo process
-*	exits with an error or a dead philosopher, sends the signal to
-*	kill all other child processes.
-*/
 static int	get_child_philo(t_rules *rules, pid_t *pid)
 {
 	int	philo_exit_code;
@@ -91,12 +72,6 @@ static int	get_child_philo(t_rules *rules, pid_t *pid)
 	return (0);
 }
 
-/* stop_simulation:
-*	Waits for each child process and analyses its exit code
-*	as long as the simulation is still ongoing.
-*	Ends the simulation when one of the end conditions are fulfilled:
-*	when a philosopher dies or when all philosophers have eaten enough.
-*/
 static int	stop_simulation(t_rules	*rules)
 {
 	unsigned int	i;
@@ -124,9 +99,6 @@ static int	stop_simulation(t_rules	*rules)
 	return (0);
 }
 
-/* main:
-*	Main philosophers function.
-*/
 int	main(int ac, char **av)
 {
 	t_rules	*rules;
@@ -143,7 +115,5 @@ int	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	if (stop_simulation(rules) == -1)
 		return (rules_cleanup(rules, EXIT_FAILURE));
-	if (rules->must_eat_count >= 0)
-		write_outcome(rules);
 	return (rules_cleanup(rules, EXIT_SUCCESS));
 }

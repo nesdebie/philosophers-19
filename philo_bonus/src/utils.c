@@ -6,28 +6,22 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:24:28 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 00:41:54 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-/* ft_strlen:
-*	Measures the length of a string.
-*/
 size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
 	i = 0;
-	while (str[i] != 0)
+	while (str[i])
 		i++;
 	return (i);
 }
 
-/* ft_strcat:
-*	Concatenates two strings.
-*/
 char	*ft_strcat(char	*dst, const char *src)
 {
 	size_t	i;
@@ -46,10 +40,6 @@ char	*ft_strcat(char	*dst, const char *src)
 	return (dst);
 }
 
-/* ft_utoa:
-*	Turns a unsigned integer into a string of characters. The length of
-*	the string must be calculated in advance and specified to this function.
-*/
 char	*ft_utoa(unsigned int nb, size_t len)
 {
 	char	*ret;
@@ -80,9 +70,9 @@ int	start_grim_reaper_threads(t_rules *rules)
 {
 	if (pthread_create(&rules->gluttony_reaper, NULL,
 			&global_gluttony_reaper, rules) != 0)
-		return (error_failure("%s error: Could not create thread.\n", NULL, rules));
+		return (ft_error("%sCould not create thread.\n", NULL, rules));
 	if (pthread_create(&rules->famine_reaper, NULL,
 			&global_famine_reaper, rules) != 0)
-		return (error_failure("%s error: Could not create thread.\n", NULL, rules));
+		return (ft_error("%sCould not create thread.\n", NULL, rules));
 	return (1);
 }
