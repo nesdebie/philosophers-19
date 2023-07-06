@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:15:42 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:39:30 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:32:28 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,3 @@ void	write_status(t_philo *philo, int reaper_report, t_status status)
 	if (!reaper_report)
 		sem_post(philo->sem_write);
 }
-
-
