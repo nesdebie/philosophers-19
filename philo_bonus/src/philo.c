@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:41:09 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:41:49 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,19 @@ static void	lone_philo_routine(t_philo *philo)
 	philo->sem_philo_full = sem_open("fed", O_CREAT,
 			S_IRUSR | S_IWUSR, philo->rules->nb_philos);
 	if (philo->sem_philo_full == SEM_FAILED)
-		exit(CHILD_EXIT_ERR_SEM);
+		exit(EXIT_FAILURE);
 	sem_wait(philo->sem_philo_full);
 	sim_start_delay(philo->rules->start_time);
 	if (philo->rules->must_eat_count == 0)
 	{
 		sem_post(philo->sem_philo_full);
-		exit(CHILD_EXIT_PHILO_FULL);
+		exit(FULL);
 	}
 	print_status(philo, "has taken a fork");
 	philo_sleep(philo->rules->time_to_die);
 	print_status(philo, "died");
 	free_rules(philo->rules);
-	exit(CHILD_EXIT_PHILO_DEAD);
+	exit(DIED);
 }
 
 static void	philosopher_routine(t_philo *philo)
@@ -93,12 +93,12 @@ void	philosopher(t_rules *rules)
 	if (philo->rules->must_eat_count == 0)
 	{
 		sem_post(philo->sem_philo_full);
-		child_exit(rules, CHILD_EXIT_PHILO_FULL);
+		child_exit(rules, FULL);
 	}
 	if (philo->rules->time_to_die == 0)
 	{
 		sem_post(philo->sem_philo_dead);
-		child_exit(rules, CHILD_EXIT_PHILO_DEAD);
+		child_exit(rules, DIED);
 	}
 	sem_wait(philo->sem_meal);
 	philo->last_meal = philo->rules->start_time;

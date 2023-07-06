@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 10:32:14 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:44:55 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <pthread.h>
+
+# define DIED 0
+# define EATING 1
+# define SLEEPING 2
+# define THINKING 3
+# define GOT_FORK_1 4
+# define GOT_FORK_2 5
+# define FULL 6
+
+# define ERR_PTHREAD 7
+# define ERR_SEM 8
 
 typedef struct s_philo	t_philo;
 
@@ -66,16 +77,6 @@ typedef struct s_philo
 	t_rules			*rules;
 }	t_philo;
 
-typedef enum e_status
-{
-	DIED = 0,
-	EATING = 1,
-	SLEEPING = 2,
-	THINKING = 3,
-	GOT_FORK_1 = 4,
-	GOT_FORK_2 = 5
-}	t_status;
-
 int		has_simulation_stopped(t_rules *rules);
 
 int		is_valid_input(int ac, char **av);
@@ -93,7 +94,7 @@ time_t	get_time_in_ms(void);
 void	philo_sleep(time_t sleep_time);
 void	sim_start_delay(time_t start_time);
 
-void	write_status(t_philo *philo, int reaper, t_status status);
+void	write_status(t_philo *philo, int reaper, int status);
 void	print_status(t_philo *philo, char *str);
 
 void	*global_gluttony_reaper(void *data);

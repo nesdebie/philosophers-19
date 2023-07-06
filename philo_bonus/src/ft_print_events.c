@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:15:42 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 10:32:28 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:39:38 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_status(t_philo *philo, char *str)
 		philo->id + 1, str);
 }
 
-void	write_status(t_philo *philo, int reaper_report, t_status status)
+void	write_status(t_philo *philo, int reaper_report, int status)
 {
 	sem_wait(philo->sem_write);
 	if (status == DIED)

@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:40:16 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/06 10:44:44 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ static int	get_child_philo(t_rules *rules, pid_t *pid)
 		if (WIFEXITED(philo_exit_code))
 		{
 			exit_code = WEXITSTATUS(philo_exit_code);
-			if (exit_code == CHILD_EXIT_PHILO_DEAD)
+			if (exit_code == DIED)
 				return (kill_all_philos(rules, 1));
-			if (exit_code == CHILD_EXIT_ERR_PTHREAD
-				|| exit_code == CHILD_EXIT_ERR_SEM)
+			if (exit_code == ERR_PTHREAD
+				|| exit_code == ERR_SEM)
 				return (kill_all_philos(rules, -1));
-			if (exit_code == CHILD_EXIT_PHILO_FULL)
+			if (exit_code == FULL)
 			{
 				rules->philo_full_count += 1;
 				return (1);
