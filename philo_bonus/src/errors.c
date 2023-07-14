@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:44:00 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:41:50 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:54:08 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,12 @@ int	ft_error(char *str, t_rules *rules)
 {
 	if (rules)
 		free_rules(rules);
-	return (error_msg(str, 0));
+	return (error_msg(str, EXIT_FAILURE));
 }
 
 void	*error_null(char *str, t_rules *rules)
 {
-	if (rules)
-		free_rules(rules);
-	error_msg(str, EXIT_FAILURE);
+	ft_error(str, rules);
 	return (0);
 }
 

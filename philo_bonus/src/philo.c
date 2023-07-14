@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:38:46 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:50:12 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ void	philosopher(t_rules *rules)
 	if (philo->rules->nb_philos == 1)
 		lone_philo_routine(philo);
 	init_philo_ipc(rules, philo);
-	if (philo->rules->must_eat_count == 0)
+	if (!philo->rules->must_eat_count)
 	{
 		sem_post(philo->sem_philo_full);
 		child_exit(rules, FULL);
 	}
-	if (philo->rules->time_to_die == 0)
+	if (!philo->rules->time_to_die)
 	{
 		sem_post(philo->sem_philo_dead);
 		child_exit(rules, DIED);
