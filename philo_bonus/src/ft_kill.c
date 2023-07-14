@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:47:54 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 11:11:21 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:15:11 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ void	*ft_all_fed(void *data)
 	t_rules	*rules;
 
 	rules = (t_rules *)data;
-	if (rules->must_eat_count < 0 || !rules->time_to_die
-		|| rules->nb_philos == 1)
+	if (rules->nb_philos == 1)
+		return (0);
+	if (rules->must_eat_count < 0 || !rules->time_to_die)
 		return (0);
 	sim_start_delay(rules->start_time);
 	while (rules->philo_full_count < rules->nb_philos)

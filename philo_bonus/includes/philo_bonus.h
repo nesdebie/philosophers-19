@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:07:51 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:18:54 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int		is_valid(int ac, char **av);
 /* INIT */
 t_rules	*init_rules(int ac, char **av);
 void	init_philo_ipc(t_rules *rules, t_philo *philo);
-int		set_death_threads(t_rules *rules);
+int		set_threads(t_rules *rules);
 
 void	philosopher(t_rules *rules);
 void	grab_fork(t_philo *philo);
@@ -118,7 +118,7 @@ int		sem_error_cleanup(t_rules *rules);
 
 /* ERRORS AND EXIT */
 void	child_exit(t_rules *rules, int exit_code);
-int		error_msg(char *str, int exit_no);
+int		error_msg(char *str, int exit_nb);
 int		ft_error(char *str, t_rules *rules);
 void	*error_null(char *str, t_rules *rules);
 

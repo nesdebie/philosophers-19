@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:40:51 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:16:54 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	start_simulation(t_rules *rules)
 			philosopher(rules);
 		}
 	}
-	if (!set_death_threads(rules))
+	if (!set_threads(rules))
 		return (0);
 	return (1);
 }

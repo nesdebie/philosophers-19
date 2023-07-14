@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:09:43 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:16:54 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	unlink_global_sems(void)
 	sem_unlink("stop");
 }
 
-int	set_death_threads(t_rules *rules)
+int	set_threads(t_rules *rules)
 {
 	if (pthread_create(&rules->fed, NULL, &ft_all_fed, rules))
 		return (ft_error("Could not create thread.\n", rules));

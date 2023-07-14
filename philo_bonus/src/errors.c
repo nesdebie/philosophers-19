@@ -6,17 +6,17 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:44:00 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:54:08 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:18:54 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-int	error_msg(char *str, int exit_no)
+int	error_msg(char *str, int exit_nb)
 {
 	printf("philo_bonus: error: ");
 	printf("%s", str);
-	return (exit_no);
+	return (exit_nb);
 }
 
 int	ft_error(char *str, t_rules *rules)
