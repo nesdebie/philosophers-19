@@ -6,20 +6,27 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 12:42:55 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:07:43 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-int	has_simulation_stopped(t_rules *rules)
+static int	rules_cleanup(t_rules *rules, int exit_code)
 {
-	int	ret;
-
-	sem_wait(rules->sem_stop);
-	ret = rules->stop_sim;
-	sem_post(rules->sem_stop);
-	return (ret);
+	if (rules)
+	{
+		pthread_join(rules->starved, NULL);
+		pthread_join(rules->fed, NULL);
+		sem_close(rules->sem_forks);
+		sem_close(rules->sem_write);
+		sem_close(rules->sem_philo_full);
+		sem_close(rules->sem_philo_dead);
+		sem_close(rules->sem_stop);
+		unlink_global_sems();
+		free_rules(rules);
+	}
+	return (exit_code);
 }
 
 static int	start_simulation(t_rules *rules)
@@ -52,15 +59,14 @@ static int	get_child_philo(t_rules *rules, pid_t *pid)
 	int	philo_exit_code;
 	int	exit_code;
 
-	if (*pid && waitpid(*pid, &philo_exit_code, WNOHANG) != 0)
+	if (*pid && waitpid(*pid, &philo_exit_code, WNOHANG))
 	{
 		if (WIFEXITED(philo_exit_code))
 		{
 			exit_code = WEXITSTATUS(philo_exit_code);
 			if (exit_code == DIED)
 				return (kill_all_philos(rules, 1));
-			if (exit_code == ERR_PTHREAD
-				|| exit_code == ERR_SEM)
+			if (exit_code == ERR_PTHREAD || exit_code == ERR_SEM)
 				return (kill_all_philos(rules, -1));
 			if (exit_code == FULL)
 			{
@@ -106,9 +112,9 @@ int	main(int ac, char **av)
 	rules = NULL;
 	if (ac < 5 || ac > 6)
 		return (error_msg("Wrong amount of arguments.", EXIT_FAILURE));
-	if (!is_valid_input(ac, av))
+	if (!is_valid(ac, av))
 		return (EXIT_FAILURE);
-	rules = init_rules(ac, av, 1);
+	rules = init_rules(ac, av);
 	if (!rules)
 		return (EXIT_FAILURE);
 	if (!start_simulation(rules))

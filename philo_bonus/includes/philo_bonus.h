@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 12:37:53 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:07:51 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ typedef struct s_philo
 
 /* CHECKERS */
 int		has_simulation_stopped(t_rules *rules);
-int		is_valid_input(int ac, char **av);
+int		is_valid(int ac, char **av);
 
 /* INIT */
-t_rules	*init_rules(int ac, char **av, int i);
+t_rules	*init_rules(int ac, char **av);
 void	init_philo_ipc(t_rules *rules, t_philo *philo);
 int		set_death_threads(t_rules *rules);
 
@@ -110,12 +110,11 @@ int		kill_all_philos(t_rules *rules, int exit_code);
 char	*ft_utoa(unsigned int nb, size_t len);
 char	*ft_strcat(char	*dst, const char *src);
 size_t	ft_strlen(const char *str);
-int		integer_atoi(char *str);
+int		philo_atoi(char *str);
 
 /* FREES */
 void	*free_rules(t_rules *rules);
 int		sem_error_cleanup(t_rules *rules);
-int		rules_cleanup(t_rules *rules, int exit_code);
 
 /* ERRORS AND EXIT */
 void	child_exit(t_rules *rules, int exit_code);

@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 11:31:40 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:04:07 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_philo	**init_philosophers(t_rules *rules)
 	{
 		philos[i] = malloc(sizeof(t_philo));
 		if (!philos[i])
-			return (error_null("Could not allocate memory.\n", 0));
+			return (error_null("Could not allocate memory.\n", rules));
 		philos[i]->rules = rules;
 		philos[i]->id = i;
 		if (!set_philo_sem_names(philos[i]))
@@ -77,43 +77,43 @@ static int	init_global_semaphores(t_rules *rules)
 	unlink_global_sems();
 	rules->sem_forks = sem_open("forks", O_CREAT,
 			S_IRUSR | S_IWUSR, rules->nb_philos);
-	if (rules->sem_forks == SEM_FAILED)
+	if (rules->sem_forks == -1)
 		return (sem_error_cleanup(rules));
 	rules->sem_write = sem_open("write", O_CREAT,
 			S_IRUSR | S_IWUSR, 1);
-	if (rules->sem_write == SEM_FAILED)
+	if (rules->sem_write == -1)
 		return (sem_error_cleanup(rules));
 	rules->sem_philo_full = sem_open("fed", O_CREAT,
 			S_IRUSR | S_IWUSR, rules->nb_philos);
-	if (rules->sem_philo_full == SEM_FAILED)
+	if (rules->sem_philo_full == -1)
 		return (sem_error_cleanup(rules));
 	rules->sem_philo_dead = sem_open("dead", O_CREAT,
 			S_IRUSR | S_IWUSR, rules->nb_philos);
-	if (rules->sem_philo_dead == SEM_FAILED)
+	if (rules->sem_philo_dead == -1)
 		return (sem_error_cleanup(rules));
 	rules->sem_stop = sem_open("stop", O_CREAT,
 			S_IRUSR | S_IWUSR, 1);
-	if (rules->sem_stop == SEM_FAILED)
+	if (rules->sem_stop == -1)
 		return (sem_error_cleanup(rules));
 	return (1);
 }
 
-t_rules	*init_rules(int ac, char **av, int i)
+t_rules	*init_rules(int ac, char **av)
 {
 	t_rules	*rules;
 
-	rules = malloc(sizeof(t_rules) * 1);
+	rules = malloc(sizeof(t_rules));
 	if (!rules)
 		return (error_null("Could not allocate memory.\n", 0));
-	rules->nb_philos = integer_atoi(av[i++]);
-	rules->time_to_die = integer_atoi(av[i++]);
-	rules->time_to_eat = integer_atoi(av[i++]);
-	rules->time_to_sleep = integer_atoi(av[i++]);
+	rules->nb_philos = philo_atoi(av[1]);
+	rules->time_to_die = philo_atoi(av[2]);
+	rules->time_to_eat = philo_atoi(av[3]);
+	rules->time_to_sleep = philo_atoi(av[4]);
 	rules->must_eat_count = -1;
 	rules->philo_full_count = 0;
 	rules->stop_sim = 0;
 	if (ac - 1 == 5)
-		rules->must_eat_count = integer_atoi(av[i]);
+		rules->must_eat_count = philo_atoi(av[5]);
 	if (!init_global_semaphores(rules))
 		return (0);
 	rules->philos = init_philosophers(rules);
@@ -121,6 +121,6 @@ t_rules	*init_rules(int ac, char **av, int i)
 		return (0);
 	rules->pids = malloc(sizeof * rules->pids * rules->nb_philos);
 	if (!rules->pids)
-		return (error_null("Could not allocate memory.\n", 0));
+		return (error_null("Could not allocate memory.\n", rules));
 	return (rules);
 }

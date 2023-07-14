@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:43:13 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 12:42:25 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:06:48 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
+
+int	has_simulation_stopped(t_rules *rules)
+{
+	int	ret;
+
+	sem_wait(rules->sem_stop);
+	ret = rules->stop_sim;
+	sem_post(rules->sem_stop);
+	return (ret);
+}
 
 static int	only_digits(char *str)
 {
@@ -26,7 +36,7 @@ static int	only_digits(char *str)
 	return (1);
 }
 
-int	integer_atoi(char *str)
+int	philo_atoi(char *str)
 {
 	unsigned long long int	nb;
 	int						i;
@@ -43,7 +53,7 @@ int	integer_atoi(char *str)
 	return ((int)nb);
 }
 
-int	is_valid_input(int ac, char **av)
+int	is_valid(int ac, char **av)
 {
 	int	i;
 	int	nb;
@@ -53,7 +63,7 @@ int	is_valid_input(int ac, char **av)
 	{
 		if (!only_digits(av[i]))
 			return (error_msg("Not only-digits input found.\n", EXIT_FAILURE));
-		nb = integer_atoi(av[i]);
+		nb = philo_atoi(av[i]);
 		if (i == 1 && (nb <= 0))
 			return (error_msg("Too many philosophers", EXIT_FAILURE));
 		if (i != 1 && nb == -1)

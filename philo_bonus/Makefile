@@ -6,7 +6,7 @@ SRCS	=	./src/main.c \
 			./src/utils.c \
 			./src/ft_kill.c \
 			./src/ft_print_events.c \
-			./src/parsing.c \
+			./src/checker.c \
 			./src/philo.c \
 			./src/philo_utils.c \
 			./src/process_comm.c \
