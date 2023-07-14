@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/06/06 12:42:51 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:22:56 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ typedef struct s_rules
 	t_philosopher		*phi;
 }						t_rules;
 
-int						ft_error(char *str);
+int			ft_error(char *str);
 
-int						init_manager(t_rules *rules, char **argv);
+int			init_manager(t_rules *rules, char **argv);
 
-size_t					ft_strlen(char const *str);
-int						ft_atoi(char const *str);
-void					print_routine(t_rules *rules, int id, char *string);
-long long				get_time(void);
-void					better_usleep(long long time, t_rules *rules);
+size_t		ft_strlen(char const *str);
+int			ft_atoi(char const *str);
+void		print_routine(t_rules *rules, int id, char *string);
+long long	get_time(void);
+void		better_usleep(long long time, t_rules *rules);
 
-int						ft_create_threads(t_rules *rules);
+int			ft_create_threads(t_rules *rules);
 
 #endif

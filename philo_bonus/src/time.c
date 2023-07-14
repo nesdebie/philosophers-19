@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:44:45 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:41:25 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:12:03 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 time_t	get_time_in_ms(void)
 {
-	struct timeval		tv;
+	struct timeval		tval;
 
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	gettimeofday(&tval, NULL);
+	return ((tval.tv_sec * 1000) + (tval.tv_usec / 1000));
 }
 
 void	philo_sleep(time_t sleep_time)

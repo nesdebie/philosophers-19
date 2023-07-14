@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:17:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/06/06 12:32:37 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:07:15 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void	*routine(void *void_philosopher)
 		better_usleep(rules->time_to_sleep, rules);
 		print_routine(rules, philo->id, "is thinking");
 	}
-	return (NULL);
+	return (0);
 }
 
 int	ft_create_threads(t_rules *r)

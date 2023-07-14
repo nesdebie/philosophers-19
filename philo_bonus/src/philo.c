@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 10:41:49 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:11:21 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static void	eat_sleep_routine(t_philo *philo)
 {
 	grab_fork(philo);
 	grab_fork(philo);
-	write_status(philo, 0, EATING);
+	print_action_parser(philo, 0, EATING);
 	sem_wait(philo->sem_meal);
 	philo->last_meal = get_time_in_ms();
 	sem_post(philo->sem_meal);
 	philo_sleep(philo->rules->time_to_eat);
-	write_status(philo, 0, SLEEPING);
+	print_action_parser(philo, 0, SLEEPING);
 	sem_post(philo->sem_forks);
 	sem_post(philo->sem_forks);
 	sem_wait(philo->sem_meal);
@@ -47,7 +47,7 @@ static void	think_routine(t_philo *philo, int silent)
 	if (time_to_think > 600)
 		time_to_think = 200;
 	if (silent == 0)
-		write_status(philo, 0, THINKING);
+		print_action_parser(philo, 0, THINKING);
 	philo_sleep(time_to_think);
 }
 
@@ -64,9 +64,9 @@ static void	lone_philo_routine(t_philo *philo)
 		sem_post(philo->sem_philo_full);
 		exit(FULL);
 	}
-	print_status(philo, "has taken a fork");
+	print_action(philo, "has taken a fork");
 	philo_sleep(philo->rules->time_to_die);
-	print_status(philo, "died");
+	print_action(philo, "died");
 	free_rules(philo->rules);
 	exit(DIED);
 }

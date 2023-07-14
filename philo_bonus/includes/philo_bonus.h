@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 10:44:55 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:38:32 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ typedef struct s_rules
 	t_philo			**philos;
 	t_philo			*this_philo;
 	pid_t			*pids;
-	pthread_t		gluttony_reaper;
-	pthread_t		famine_reaper;
+	pthread_t		fed;
+	pthread_t		starved;
 }	t_rules;
 
 typedef struct s_philo
@@ -94,11 +94,11 @@ time_t	get_time_in_ms(void);
 void	philo_sleep(time_t sleep_time);
 void	sim_start_delay(time_t start_time);
 
-void	write_status(t_philo *philo, int reaper, int status);
-void	print_status(t_philo *philo, char *str);
+void	print_action_parser(t_philo *philo, int reaper, int status);
+void	print_action(t_philo *philo, char *str);
 
-void	*global_gluttony_reaper(void *data);
-void	*global_famine_reaper(void *data);
+void	*ft_all_fed(void *data);
+void	*ft_starve_to_death(void *data);
 void	*personal_grim_reaper(void *data);
 int		kill_all_philos(t_rules *rules, int exit_code);
 
@@ -106,15 +106,16 @@ char	*ft_utoa(unsigned int nb, size_t len);
 char	*ft_strcat(char	*dst, const char *src);
 size_t	ft_strlen(const char *str);
 void	unlink_global_sems(void);
-int		start_grim_reaper_threads(t_rules *rules);
+int		set_death_threads(t_rules *rules);
 
 void	*free_rules(t_rules *rules);
 int		sem_error_cleanup(t_rules *rules);
 int		rules_cleanup(t_rules *rules, int exit_code);
 
+int		detailed_error_msg(char *str, char *status, int exit_no);
 void	child_exit(t_rules *rules, int exit_code);
-int		error_msg(char *str, char *detail, int exit_no);
-int		ft_error(char *str, char *details, t_rules *rules);
-void	*error_null(char *str, char *details, t_rules *rules);
+int		error_msg(char *str, int exit_no);
+int		ft_error(char *str, t_rules *rules);
+void	*error_null(char *str, t_rules *rules);
 
 #endif

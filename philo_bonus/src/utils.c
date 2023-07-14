@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 00:41:54 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:33:28 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_utoa(unsigned int nb, size_t len)
 
 	ret = malloc(sizeof * ret * (len + 1));
 	if (!ret)
-		return (NULL);
+		return (0);
 	ret[len] = 0;
 	len--;
 	while (nb % 10)
@@ -66,13 +66,13 @@ void	unlink_global_sems(void)
 	sem_unlink("stop");
 }
 
-int	start_grim_reaper_threads(t_rules *rules)
+int	set_death_threads(t_rules *rules)
 {
-	if (pthread_create(&rules->gluttony_reaper, NULL,
-			&global_gluttony_reaper, rules) != 0)
-		return (ft_error("%sCould not create thread.\n", NULL, rules));
-	if (pthread_create(&rules->famine_reaper, NULL,
-			&global_famine_reaper, rules) != 0)
-		return (ft_error("%sCould not create thread.\n", NULL, rules));
+	if (pthread_create(&rules->fed, NULL,
+			&ft_all_fed, rules))
+		return (ft_error("Could not create thread.\n", rules));
+	if (pthread_create(&rules->starved, NULL,
+			&ft_starve_to_death, rules))
+		return (ft_error("Could not create thread.\n", rules));
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/06 10:44:44 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:33:28 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	start_simulation(t_rules *rules)
 	{
 		pid = fork();
 		if (pid == -1)
-			return (ft_error("%sCould not fork child.\n", NULL, rules));
+			return (ft_error("Could not fork child.\n", rules));
 		else if (pid > 0)
 			rules->pids[i] = pid;
 		else if (pid == 0)
@@ -42,7 +42,7 @@ static int	start_simulation(t_rules *rules)
 			philosopher(rules);
 		}
 	}
-	if (start_grim_reaper_threads(rules) == 0)
+	if (set_death_threads(rules) == 0)
 		return (0);
 	return (1);
 }
@@ -105,7 +105,7 @@ int	main(int ac, char **av)
 
 	rules = NULL;
 	if (ac < 5 || ac > 6)
-		return (error_msg("Wrong amount of arguments (min. 5 to 6)", NULL, EXIT_FAILURE));
+		return (error_msg("Wrong amount of arguments (min. 5 to 6)", EXIT_FAILURE));
 	if (!is_valid_input(ac, av))
 		return (EXIT_FAILURE);
 	rules = init_rules(ac, av, 1);
