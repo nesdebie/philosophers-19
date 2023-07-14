@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 11:33:28 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 12:42:55 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	start_simulation(t_rules *rules)
 			philosopher(rules);
 		}
 	}
-	if (set_death_threads(rules) == 0)
+	if (!set_death_threads(rules))
 		return (0);
 	return (1);
 }
@@ -78,7 +78,7 @@ static int	stop_simulation(t_rules	*rules)
 	int				exit_code;
 
 	sim_start_delay(rules->start_time);
-	while (has_simulation_stopped(rules) == 0)
+	while (!has_simulation_stopped(rules))
 	{
 		i = 0;
 		while (i < rules->nb_philos)
@@ -105,7 +105,7 @@ int	main(int ac, char **av)
 
 	rules = NULL;
 	if (ac < 5 || ac > 6)
-		return (error_msg("Wrong amount of arguments (min. 5 to 6)", EXIT_FAILURE));
+		return (error_msg("Wrong amount of arguments.", EXIT_FAILURE));
 	if (!is_valid_input(ac, av))
 		return (EXIT_FAILURE);
 	rules = init_rules(ac, av, 1);

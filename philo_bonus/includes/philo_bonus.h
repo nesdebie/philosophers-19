@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 11:38:32 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 12:37:53 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,42 +77,47 @@ typedef struct s_philo
 	t_rules			*rules;
 }	t_philo;
 
+/* CHECKERS */
 int		has_simulation_stopped(t_rules *rules);
-
 int		is_valid_input(int ac, char **av);
-int		integer_atoi(char *str);
 
+/* INIT */
 t_rules	*init_rules(int ac, char **av, int i);
-
 void	init_philo_ipc(t_rules *rules, t_philo *philo);
+int		set_death_threads(t_rules *rules);
 
 void	philosopher(t_rules *rules);
-
 void	grab_fork(t_philo *philo);
 
+void	unlink_global_sems(void);
+
+/* TIME */
 time_t	get_time_in_ms(void);
 void	philo_sleep(time_t sleep_time);
 void	sim_start_delay(time_t start_time);
 
+/* PRINTER */
 void	print_action_parser(t_philo *philo, int reaper, int status);
 void	print_action(t_philo *philo, char *str);
 
+/* KILLERS */
 void	*ft_all_fed(void *data);
 void	*ft_starve_to_death(void *data);
 void	*personal_grim_reaper(void *data);
 int		kill_all_philos(t_rules *rules, int exit_code);
 
+/* LIBFT */
 char	*ft_utoa(unsigned int nb, size_t len);
 char	*ft_strcat(char	*dst, const char *src);
 size_t	ft_strlen(const char *str);
-void	unlink_global_sems(void);
-int		set_death_threads(t_rules *rules);
+int		integer_atoi(char *str);
 
+/* FREES */
 void	*free_rules(t_rules *rules);
 int		sem_error_cleanup(t_rules *rules);
 int		rules_cleanup(t_rules *rules, int exit_code);
 
-int		detailed_error_msg(char *str, char *status, int exit_no);
+/* ERRORS AND EXIT */
 void	child_exit(t_rules *rules, int exit_code);
 int		error_msg(char *str, int exit_no);
 int		ft_error(char *str, t_rules *rules);

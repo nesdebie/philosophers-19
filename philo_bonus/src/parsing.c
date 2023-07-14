@@ -6,13 +6,13 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:43:13 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 11:39:28 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 12:42:25 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-static int	contains_only_digits(char *str)
+static int	only_digits(char *str)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ int	integer_atoi(char *str)
 		nb = nb * 10 + (str[i] - '0');
 		i++;
 	}
-	if (nb > INT_MAX)
+	if (nb > INT32_MAX)
 		return (-1);
 	return ((int)nb);
 }
@@ -51,13 +51,13 @@ int	is_valid_input(int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (!contains_only_digits(av[i]))
-			return (detailed_error_msg("invalid input: %s: not a valid unsigned integer between 0 and 2147483647.\n", av[i], 0));
+		if (!only_digits(av[i]))
+			return (error_msg("Not only-digits input found.\n", EXIT_FAILURE));
 		nb = integer_atoi(av[i]);
 		if (i == 1 && (nb <= 0))
-			return (detailed_error_msg("invalid input: there must be between 1 and %s philosophers.\n", "Too many philosophers", 0));
+			return (error_msg("Too many philosophers", EXIT_FAILURE));
 		if (i != 1 && nb == -1)
-			return (detailed_error_msg("invalid input: %s: not a valid unsigned integer between 0 and 2147483647.\n", av[i], 0));
+			return (error_msg("Too big input.\n", EXIT_FAILURE));
 		i++;
 	}
 	return (1);
