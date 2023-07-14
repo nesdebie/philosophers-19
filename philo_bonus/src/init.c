@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:38:10 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:22:12 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_rules	*init_rules(int ac, char **av)
 	rules->time_to_sleep = philo_atoi(av[4]);
 	rules->must_eat_count = -1;
 	rules->philo_full_count = 0;
-	rules->stop_sim = 0;
+	rules->stop = 0;
 	if (ac - 1 == 5)
 		rules->must_eat_count = philo_atoi(av[5]);
 	if (!init_global_semaphores(rules))

@@ -6,18 +6,18 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:43:13 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:40:39 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:24:43 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-int	has_simulation_stopped(t_rules *rules)
+int	is_stopped(t_rules *rules)
 {
 	int	ret;
 
 	sem_wait(rules->sem_stop);
-	ret = rules->stop_sim;
+	ret = rules->stop;
 	sem_post(rules->sem_stop);
 	return (ret);
 }

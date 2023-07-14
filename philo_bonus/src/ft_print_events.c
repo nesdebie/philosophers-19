@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:15:42 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 11:11:21 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:53:23 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	print_action_parser(t_philo *philo, int reaper_report, int status)
 {
 	sem_wait(philo->sem_write);
 	if (status == DIED)
+	{
 		print_action(philo, "died");
+		exit (0);
+	}
 	else if (status == EATING)
 		print_action(philo, "is eating");
 	else if (status == SLEEPING)

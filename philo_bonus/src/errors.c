@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:44:00 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:18:54 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:42:01 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*error_null(char *str, t_rules *rules)
 void	child_exit(t_rules *rules, int exit_code)
 {
 	sem_post(rules->this_philo->sem_meal);
-	pthread_join(rules->this_philo->personal_grim_reaper, NULL);
+	pthread_join(rules->this_philo->p_killer, NULL);
 	if (exit_code == ERR_SEM)
 		error_msg("Could not create semaphore.\n", EXIT_FAILURE);
 	if (exit_code == ERR_PTHREAD)

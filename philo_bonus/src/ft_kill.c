@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:47:54 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:15:11 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:44:55 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ void	*ft_all_fed(void *data)
 	sim_start_delay(rules->start_time);
 	while (rules->philo_full_count < rules->nb_philos)
 	{
-		if (has_simulation_stopped(rules))
+		if (is_stopped(rules))
 			return (0);
 		sem_wait(rules->sem_philo_full);
-		if (!has_simulation_stopped(rules))
+		if (!is_stopped(rules))
 			rules->philo_full_count += 1;
 		else
 			return (0);
 	}
 	sem_wait(rules->sem_stop);
-	rules->stop_sim = 1;
+	rules->stop = 1;
 	kill_all_philos(rules, EXIT_SUCCESS);
 	sem_post(rules->sem_philo_dead);
 	sem_post(rules->sem_stop);
@@ -61,13 +61,13 @@ void	*ft_starve_to_death(void *data)
 	if (rules->nb_philos)
 		return (0);
 	sim_start_delay(rules->start_time);
-	if (has_simulation_stopped(rules))
+	if (is_stopped(rules))
 		return (0);
 	sem_wait(rules->sem_philo_dead);
-	if (has_simulation_stopped(rules))
+	if (is_stopped(rules))
 		return (0);
 	sem_wait(rules->sem_stop);
-	rules->stop_sim = 1;
+	rules->stop = 1;
 	kill_all_philos(rules, EXIT_SUCCESS);
 	sem_post(rules->sem_philo_full);
 	sem_post(rules->sem_stop);
@@ -94,7 +94,7 @@ static int	end_condition_reached(t_rules *rules, t_philo *philo)
 	return (0);
 }
 
-void	*personal_grim_reaper(void *data)
+void	*process_killer(void *data)
 {
 	t_rules			*rules;
 
@@ -104,7 +104,7 @@ void	*personal_grim_reaper(void *data)
 	sem_wait(rules->this_philo->sem_philo_dead);
 	sem_wait(rules->this_philo->sem_philo_full);
 	sim_start_delay(rules->start_time);
-	while (!end_condition_reached(rules, rules->this_philo))
+	while (end_condition_reached(rules, rules->this_philo) == 0)
 	{
 		usleep(1000);
 		continue ;

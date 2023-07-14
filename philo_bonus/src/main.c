@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:16:54 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:35:53 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	stop_simulation(t_rules	*rules)
 	int				exit_code;
 
 	sim_start_delay(rules->start_time);
-	while (!has_simulation_stopped(rules))
+	while (!is_stopped(rules))
 	{
 		i = 0;
 		while (i < rules->nb_philos)
@@ -93,7 +93,7 @@ static int	stop_simulation(t_rules	*rules)
 			if (exit_code == 1 || exit_code == -1)
 			{
 				sem_wait(rules->sem_stop);
-				rules->stop_sim = 1;
+				rules->stop = 1;
 				sem_post(rules->sem_philo_full);
 				sem_post(rules->sem_philo_dead);
 				sem_post(rules->sem_stop);

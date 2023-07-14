@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:18:54 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 15:28:41 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_rules
 	unsigned int	philo_full_count;
 	sem_t			*sem_philo_dead;
 	sem_t			*sem_stop;
-	int				stop_sim;
+	int				stop;
 	t_philo			**philos;
 	t_philo			*this_philo;
 	pid_t			*pids;
@@ -62,7 +62,7 @@ typedef struct s_rules
 
 typedef struct s_philo
 {
-	pthread_t		personal_grim_reaper;
+	pthread_t		p_killer;
 	sem_t			*sem_forks;
 	sem_t			*sem_write;
 	sem_t			*sem_philo_full;
@@ -78,7 +78,7 @@ typedef struct s_philo
 }	t_philo;
 
 /* CHECKERS */
-int		has_simulation_stopped(t_rules *rules);
+int		is_stopped(t_rules *rules);
 int		is_valid(int ac, char **av);
 
 /* INIT */
@@ -103,7 +103,7 @@ void	print_action(t_philo *philo, char *str);
 /* KILLERS */
 void	*ft_all_fed(void *data);
 void	*ft_starve_to_death(void *data);
-void	*personal_grim_reaper(void *data);
+void	*process_killer(void *data);
 int		kill_all_philos(t_rules *rules, int exit_code);
 
 /* LIBFT */
