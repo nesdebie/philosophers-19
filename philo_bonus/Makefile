@@ -25,19 +25,16 @@ HEADER	= ./includes/philo_bonus.h
 all:	$(NAME)
 
 %.o: %.c $(HEADER)
-	@$(CC) $(FLAGS) -c $<  -o $(<:.c=.o)
+	$(CC) $(FLAGS) -c $<  -o $(<:.c=.o)
 
 $(NAME): $(OBJS)
-	@$(CC) $(INCLUDE) $(FLAGS) -o $(NAME) $(OBJS)
-	@echo "Compilation completed.\n./philo is ready to use !"
+	$(CC) $(INCLUDE) $(FLAGS) -o $(NAME) $(OBJS)
 
 clean:
-	@rm -f $(OBJS) $(B_OBJS)
-	@echo "All <file>.o are removed."
+	rm -f $(OBJS) $(B_OBJS)
 
 fclean: clean
-	@rm -f $(NAME)
-	@echo "./philo is removed."
+	rm -f $(NAME)
 
 re: fclean all
 
