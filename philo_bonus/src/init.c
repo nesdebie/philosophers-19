@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:04:07 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:38:10 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,23 @@ static int	init_global_semaphores(t_rules *rules)
 	unlink_global_sems();
 	rules->sem_forks = sem_open("forks", O_CREAT,
 			S_IRUSR | S_IWUSR, rules->nb_philos);
-	if (rules->sem_forks == -1)
+	if (rules->sem_forks == (sem_t *)-1)
 		return (sem_error_cleanup(rules));
 	rules->sem_write = sem_open("write", O_CREAT,
 			S_IRUSR | S_IWUSR, 1);
-	if (rules->sem_write == -1)
+	if (rules->sem_write == (sem_t *)-1)
 		return (sem_error_cleanup(rules));
 	rules->sem_philo_full = sem_open("fed", O_CREAT,
 			S_IRUSR | S_IWUSR, rules->nb_philos);
-	if (rules->sem_philo_full == -1)
+	if (rules->sem_philo_full == (sem_t *)-1)
 		return (sem_error_cleanup(rules));
 	rules->sem_philo_dead = sem_open("dead", O_CREAT,
 			S_IRUSR | S_IWUSR, rules->nb_philos);
-	if (rules->sem_philo_dead == -1)
+	if (rules->sem_philo_dead == (sem_t *)-1)
 		return (sem_error_cleanup(rules));
 	rules->sem_stop = sem_open("stop", O_CREAT,
 			S_IRUSR | S_IWUSR, 1);
-	if (rules->sem_stop == -1)
+	if (rules->sem_stop == (sem_t *)-1)
 		return (sem_error_cleanup(rules));
 	return (1);
 }

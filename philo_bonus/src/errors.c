@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:44:00 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 12:39:25 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:41:50 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	error_msg(char *str, int exit_no)
 {
-	printf("philo_bonus error :");
+	printf("philo_bonus: error: ");
 	printf("%s", str);
 	return (exit_no);
 }

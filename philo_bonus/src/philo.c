@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:03:01 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:38:46 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	lone_philo_routine(t_philo *philo)
 {
 	philo->sem_philo_full = sem_open("fed", O_CREAT,
 			S_IRUSR | S_IWUSR, philo->rules->nb_philos);
-	if (philo->sem_philo_full == -1)
+	if (philo->sem_philo_full == (sem_t *)-1)
 		exit(EXIT_FAILURE);
 	sem_wait(philo->sem_philo_full);
 	sim_start_delay(philo->rules->start_time);

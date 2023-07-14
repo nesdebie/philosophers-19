@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:43:13 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:06:48 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:40:39 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ int	is_valid(int ac, char **av)
 			return (error_msg("Too big input.\n", EXIT_FAILURE));
 		i++;
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 11:33:28 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:09:43 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_utoa(unsigned int nb, size_t len)
 {
 	char	*ret;
 
-	ret = malloc(sizeof * ret * (len + 1));
+	ret = malloc(sizeof(char) * (len + 1));
 	if (!ret)
 		return (0);
 	ret[len] = 0;
@@ -68,11 +68,9 @@ void	unlink_global_sems(void)
 
 int	set_death_threads(t_rules *rules)
 {
-	if (pthread_create(&rules->fed, NULL,
-			&ft_all_fed, rules))
+	if (pthread_create(&rules->fed, NULL, &ft_all_fed, rules))
 		return (ft_error("Could not create thread.\n", rules));
-	if (pthread_create(&rules->starved, NULL,
-			&ft_starve_to_death, rules))
+	if (pthread_create(&rules->starved, NULL, &ft_starve_to_death, rules))
 		return (ft_error("Could not create thread.\n", rules));
 	return (1);
 }

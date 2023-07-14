@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 14:07:43 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/14 14:40:51 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	rules_cleanup(t_rules *rules, int exit_code)
 		unlink_global_sems();
 		free_rules(rules);
 	}
-	return (exit_code);
+	exit (exit_code);
 }
 
 static int	start_simulation(t_rules *rules)
@@ -112,13 +112,13 @@ int	main(int ac, char **av)
 	rules = NULL;
 	if (ac < 5 || ac > 6)
 		return (error_msg("Wrong amount of arguments.", EXIT_FAILURE));
-	if (!is_valid(ac, av))
-		return (EXIT_FAILURE);
+	if (is_valid(ac, av))
+		exit (EXIT_FAILURE);
 	rules = init_rules(ac, av);
 	if (!rules)
-		return (EXIT_FAILURE);
+		exit (EXIT_FAILURE);
 	if (!start_simulation(rules))
-		return (EXIT_FAILURE);
+		exit (EXIT_FAILURE);
 	if (stop_simulation(rules) == -1)
 		return (rules_cleanup(rules, EXIT_FAILURE));
 	return (rules_cleanup(rules, EXIT_SUCCESS));
