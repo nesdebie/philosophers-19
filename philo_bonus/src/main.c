@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:35:53 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:18:19 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	rules_cleanup(t_rules *rules, int exit_code)
 	exit (exit_code);
 }
 
-static int	start_simulation(t_rules *rules)
+static int	philo_start(t_rules *rules)
 {
 	unsigned int	i;
 	pid_t			pid;
@@ -78,7 +78,7 @@ static int	get_child_philo(t_rules *rules, pid_t *pid)
 	return (0);
 }
 
-static int	stop_simulation(t_rules	*rules)
+static int	philo_stop(t_rules	*rules)
 {
 	unsigned int	i;
 	int				exit_code;
@@ -117,9 +117,9 @@ int	main(int ac, char **av)
 	rules = init_rules(ac, av);
 	if (!rules)
 		exit (EXIT_FAILURE);
-	if (!start_simulation(rules))
+	if (!philo_start(rules))
 		exit (EXIT_FAILURE);
-	if (stop_simulation(rules) == -1)
+	if (philo_stop(rules) == -1)
 		return (rules_cleanup(rules, EXIT_FAILURE));
 	return (rules_cleanup(rules, EXIT_SUCCESS));
 }
