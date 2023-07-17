@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 11:25:44 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:57:49 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int ac, char **av)
 	{
 		free (rules.forks);
 		free (rules.phi);
-		return (ft_error("%spthread_create() failed\n"));
+		return (ft_error("pthread_create() failed\n"));
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:47:08 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 14:53:59 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:57:00 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	open_semaphores(t_rules *rules, t_philo *philo)
 		child_exit(rules, ERR_SEM);
 	if (!open_local_semaphores(philo))
 		child_exit(rules, ERR_SEM);
-	if (pthread_create(&philo->p_killer, NULL,
-			&process_killer, rules) != 0)
+	if (pthread_create(&philo->p_killer, NULL, &process_killer, rules))
 		child_exit(rules, ERR_PTHREAD);
-	return ;
 }
