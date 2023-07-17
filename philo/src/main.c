@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 14:57:49 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:24:58 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@ int	main(int ac, char **av)
 	int		ret;
 
 	if (ac < 5 || ac > 6)
-		return (ft_error("Wrong amount of arguments (min. 5 to 6)\n"));
+		return (ft_error("Wrong amount of arguments (min. 5 to 6)"));
 	ret = init_manager(&rules, av);
 	if (ret == WRONG_ARGS)
-		return (ft_error("At least one wrong argument\nPlease try again !\n"));
+		return (ft_error("At least one wrong argument."));
 	else if (ret == MUTEX_FAIL)
-		return (ft_error("pthread_mutex_init() failed\n"));
+		return (ft_error("pthread_mutex_init() failed"));
 	else if (ret == MALLOC_FAIL)
-		return (ft_error("malloc() failed\n"));
+		return (ft_error("malloc() failed"));
 	if (!ft_create_threads(&rules))
 	{
 		free (rules.forks);
 		free (rules.phi);
-		return (ft_error("pthread_create() failed\n"));
+		return (ft_error("pthread_create() failed"));
 	}
 	return (0);
 }

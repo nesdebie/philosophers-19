@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:15:42 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 11:26:42 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:24:40 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int	ft_error(char *str)
 {
 	printf("philo error: ");
-	printf("%s", str);
+	printf("%s\n", str);
 	return (1);
 }

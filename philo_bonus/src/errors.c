@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:44:00 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:42:01 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:23:47 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	error_msg(char *str, int exit_nb)
 {
 	printf("philo_bonus: error: ");
-	printf("%s", str);
+	printf("%s\n", str);
 	return (exit_nb);
 }
 
@@ -37,9 +37,9 @@ void	child_exit(t_rules *rules, int exit_code)
 	sem_post(rules->this_philo->sem_meal);
 	pthread_join(rules->this_philo->p_killer, NULL);
 	if (exit_code == ERR_SEM)
-		error_msg("Could not create semaphore.\n", EXIT_FAILURE);
+		error_msg("Could not create semaphore.", EXIT_FAILURE);
 	if (exit_code == ERR_PTHREAD)
-		error_msg("Could not create thread.\n", EXIT_FAILURE);
+		error_msg("Could not create thread.", EXIT_FAILURE);
 	sem_close(rules->this_philo->sem_forks);
 	sem_close(rules->this_philo->sem_philo_full);
 	sem_close(rules->this_philo->sem_philo_dead);

@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:22:12 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:24:01 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,17 @@ static t_philo	**init_philosophers(t_rules *rules)
 
 	philos = malloc(sizeof(t_philo) * (rules->nb_philos + 1));
 	if (!philos)
-		return (error_null("Could not allocate memory.\n", 0));
+		return (error_null("Could not allocate memory.", 0));
 	i = 0;
 	while (i < rules->nb_philos)
 	{
 		philos[i] = malloc(sizeof(t_philo));
 		if (!philos[i])
-			return (error_null("Could not allocate memory.\n", rules));
+			return (error_null("Could not allocate memory.", rules));
 		philos[i]->rules = rules;
 		philos[i]->id = i;
 		if (!set_philo_sem_names(philos[i]))
-			return (error_null("Could not allocate memory.\n", rules));
+			return (error_null("Could not allocate memory.", rules));
 		philos[i]->times_ate = 0;
 		philos[i]->nb_forks_held = 0;
 		philos[i]->ate_enough = 0;
@@ -104,7 +104,7 @@ t_rules	*init_rules(int ac, char **av)
 
 	rules = malloc(sizeof(t_rules));
 	if (!rules)
-		return (error_null("Could not allocate memory.\n", 0));
+		return (error_null("Could not allocate memory.", 0));
 	rules->nb_philos = philo_atoi(av[1]);
 	rules->time_to_die = philo_atoi(av[2]);
 	rules->time_to_eat = philo_atoi(av[3]);
@@ -121,6 +121,6 @@ t_rules	*init_rules(int ac, char **av)
 		return (0);
 	rules->pids = malloc(sizeof * rules->pids * rules->nb_philos);
 	if (!rules->pids)
-		return (error_null("Could not allocate memory.\n", rules));
+		return (error_null("Could not allocate memory.", rules));
 	return (rules);
 }

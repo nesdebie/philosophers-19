@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:34 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 15:23:44 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:24:23 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,5 @@ int	sem_error_cleanup(t_rules *rules)
 	sem_close(rules->sem_philo_dead);
 	sem_close(rules->sem_stop);
 	unlink_global_sems();
-	return (ft_error("Could not create semaphore.\n", rules));
+	return (ft_error("Could not create semaphore.", rules));
 }
