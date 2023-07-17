@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 14:53:32 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:23:33 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	lone_philo_routine(t_philo *philo)
 		sem_post(philo->sem_philo_full);
 		exit(FULL);
 	}
-	print_action(philo, 0, GOT_FORK_1);
+	print_action(philo, 0, FORK_1);
 	philo_sleep(philo->rules->time_to_die);
 	print_action(philo, 0, DIED);
 	free_rules(philo->rules);

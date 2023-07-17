@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:15:42 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 13:25:16 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:23:44 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_action(t_philo *philo, int end_flag, int status)
 	else if (status == THINKING)
 		printf("%ld %d %s\n", get_time_in_ms() - philo->rules->start_time,
 			philo->id + 1, "is thinking");
-	else if (status == GOT_FORK_1 || status == GOT_FORK_2)
+	else if (status == FORK_1 || status == FORK_2)
 		printf("%ld %d %s\n", get_time_in_ms() - philo->rules->start_time,
 			philo->id + 1, "has taken a fork");
 	if (!end_flag)

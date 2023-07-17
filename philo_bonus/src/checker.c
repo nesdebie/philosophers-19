@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:43:13 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:24:43 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:32:35 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	is_valid(int ac, char **av)
 			return (error_msg("Not only-digits input found.\n", EXIT_FAILURE));
 		nb = philo_atoi(av[i]);
 		if (i == 1 && (nb <= 0))
-			return (error_msg("Too many philosophers", EXIT_FAILURE));
+			return (error_msg("Unvalid amount of philosophers\n", EXIT_FAILURE));
 		if (i != 1 && nb == -1)
 			return (error_msg("Too big input.\n", EXIT_FAILURE));
 		i++;

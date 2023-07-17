@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 14:53:32 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:23:44 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # define EATING 1
 # define SLEEPING 2
 # define THINKING 3
-# define GOT_FORK_1 4
-# define GOT_FORK_2 5
+# define FORK_1 4
+# define FORK_2 5
 # define FULL 6
 
 # define ERR_PTHREAD 7
