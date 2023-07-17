@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:17:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 11:33:32 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:00:44 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	*routine(void *void_philosopher)
 	rules = philo->rules;
 	if (philo->id % 2)
 		usleep(15000);
-	while (!(rules->starved))
+	while (!(rules->dead))
 	{
 		philo_eats(philo);
 		if (rules->all_fed)

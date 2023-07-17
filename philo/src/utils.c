@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 11:33:32 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:00:56 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	better_usleep(long long time, t_rules *rules)
 	long long	i;
 
 	i = get_time();
-	while (!(rules->starved))
+	while (!(rules->dead))
 	{
 		if ((get_time() - i) >= time)
 			break ;
@@ -71,7 +71,7 @@ void	better_usleep(long long time, t_rules *rules)
 void	print_routine(t_rules *rules, int id, char *s)
 {
 	pthread_mutex_lock(&(rules->state_write));
-	if (!(rules->starved))
+	if (!(rules->dead))
 		printf("%lli %i %s\n", get_time() - rules->first_timestamp, id + 1, s);
 	pthread_mutex_unlock(&(rules->state_write));
 }
