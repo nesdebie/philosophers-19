@@ -58,7 +58,7 @@ void	*ft_starve_to_death(void *data)
 	t_rules	*rules;
 
 	rules = (t_rules *)data;
-	if (rules->nb_philos)
+	if (rules->nb_philos == 1)
 		return (0);
 	sim_start_delay(rules->start_time);
 	if (is_stopped(rules))
