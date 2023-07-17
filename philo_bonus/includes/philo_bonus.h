@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 13:06:07 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:53:32 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		is_valid(int ac, char **av);
 
 /* INIT */
 t_rules	*init_rules(int ac, char **av);
-void	init_philo_ipc(t_rules *rules, t_philo *philo);
+void	open_semaphores(t_rules *rules, t_philo *philo);
 int		set_threads(t_rules *rules);
 
 void	philosopher(t_rules *rules);

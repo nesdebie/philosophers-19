@@ -9,7 +9,7 @@ SRCS	=	./src/main.c \
 			./src/checker.c \
 			./src/philo.c \
 			./src/philo_utils.c \
-			./src/process_comm.c \
+			./src/open_semaphores.c \
 			./src/time.c
 
 OBJS	= $(SRCS:.c=.o)

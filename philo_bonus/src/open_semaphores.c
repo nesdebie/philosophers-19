@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_comm.c                                     :+:      :+:    :+:   */
+/*   open_semaphores.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:47:08 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:39:31 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:53:59 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-static int	philo_open_global_semaphores(t_philo *philo)
+static int	open_global_semaphores(t_philo *philo)
 {
 	philo->sem_forks = sem_open("forks", O_CREAT,
 			S_IRUSR | S_IWUSR, philo->rules->nb_philos);
@@ -33,7 +33,7 @@ static int	philo_open_global_semaphores(t_philo *philo)
 	return (1);
 }
 
-static int	philo_open_local_semaphores(t_philo *philo)
+static int	open_local_semaphores(t_philo *philo)
 {
 	philo->sem_meal = sem_open(philo->sem_meal_name, O_CREAT,
 			S_IRUSR | S_IWUSR, 1);
@@ -43,14 +43,14 @@ static int	philo_open_local_semaphores(t_philo *philo)
 	return (1);
 }
 
-void	init_philo_ipc(t_rules *rules, t_philo *philo)
+void	open_semaphores(t_rules *rules, t_philo *philo)
 {
 	if (rules->nb_philos == 1)
 		return ;
 	sem_unlink(philo->sem_meal_name);
-	if (!philo_open_global_semaphores(philo))
+	if (!open_global_semaphores(philo))
 		child_exit(rules, ERR_SEM);
-	if (!philo_open_local_semaphores(philo))
+	if (!open_local_semaphores(philo))
 		child_exit(rules, ERR_SEM);
 	if (pthread_create(&philo->p_killer, NULL,
 			&process_killer, rules) != 0)
