@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:28:41 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:06:07 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ void	philo_sleep(time_t sleep_time);
 void	sim_start_delay(time_t start_time);
 
 /* PRINTER */
-void	print_action_parser(t_philo *philo, int reaper, int status);
-void	print_action(t_philo *philo, char *str);
+void	print_action(t_philo *philo, int end_flag, int status);
 
 /* KILLERS */
 void	*ft_all_fed(void *data);
