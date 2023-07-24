@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:34 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 16:24:23 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:13:04 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,7 @@ void	*free_rules(t_rules *rules)
 		while (i < rules->nb_philos)
 		{
 			if (rules->philos[i])
-			{
-				if (rules->philos[i]->sem_meal_name)
-					free(rules->philos[i]->sem_meal_name);
 				free(rules->philos[i]);
-			}
 			i++;
 		}
 		free(rules->philos);

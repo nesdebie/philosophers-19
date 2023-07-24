@@ -6,45 +6,11 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 16:24:01 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:12:18 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
-
-static char	*set_local_sem_name(const char *str, unsigned int id)
-{
-	unsigned int	i;
-	unsigned int	digit_count;
-	char			*sem_name;
-	char			*tmp;
-
-	digit_count = 0;
-	i = id;
-	while (i)
-	{
-		digit_count++;
-		i /= 10;
-	}
-	i = ft_strlen(str) + digit_count;
-	sem_name = malloc (sizeof * sem_name * (i + 1));
-	if (sem_name == NULL)
-		return (0);
-	sem_name[0] = 0;
-	sem_name = ft_strcat(sem_name, str);
-	tmp = ft_utoa(id, digit_count);
-	sem_name = ft_strcat(sem_name, tmp);
-	free(tmp);
-	return (sem_name);
-}
-
-static int	set_philo_sem_names(t_philo *philo)
-{
-	philo->sem_meal_name = set_local_sem_name("meal_", philo->id + 1);
-	if (philo->sem_meal_name == NULL)
-		return (0);
-	return (1);
-}
 
 static t_philo	**init_philosophers(t_rules *rules)
 {
@@ -62,8 +28,6 @@ static t_philo	**init_philosophers(t_rules *rules)
 			return (error_null("Could not allocate memory.", rules));
 		philos[i]->rules = rules;
 		philos[i]->id = i;
-		if (!set_philo_sem_names(philos[i]))
-			return (error_null("Could not allocate memory.", rules));
 		philos[i]->times_ate = 0;
 		philos[i]->nb_forks_held = 0;
 		philos[i]->ate_enough = 0;

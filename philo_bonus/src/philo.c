@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/24 14:00:11 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:04:37 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	lone_philo_routine(t_philo *philo)
 	exit(DIED);
 }
 
-static void	philosopher_routine(t_philo *philo)
+static void	philo_routine(t_philo *philo)
 {
 	if (philo->id % 2)
 		think_routine(philo, 1);
@@ -104,5 +104,5 @@ void	philosopher(t_rules *rules)
 	philo->last_meal = philo->rules->start_time;
 	sem_post(philo->sem_meal);
 	sim_start_delay(philo->rules->start_time);
-	philosopher_routine(philo);
+	philo_routine(philo);
 }

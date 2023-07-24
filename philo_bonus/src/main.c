@@ -6,27 +6,19 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/24 13:59:31 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:50:44 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-static int	rules_cleanup(t_rules *rules, int exit_code)
+static int	set_threads(t_rules *rules)
 {
-	if (rules)
-	{
-		pthread_join(rules->dead, NULL);
-		pthread_join(rules->fed, NULL);
-		sem_close(rules->sem_forks);
-		sem_close(rules->sem_write);
-		sem_close(rules->sem_philo_full);
-		sem_close(rules->sem_philo_dead);
-		sem_close(rules->sem_stop);
-		unlink_global_sems();
-		free_rules(rules);
-	}
-	exit (exit_code);
+	if (pthread_create(&rules->fed, NULL, &ft_all_fed, rules))
+		return (ft_error("Could not create thread.", rules));
+	if (pthread_create(&rules->dead, NULL, &ft_starve_to_death, rules))
+		return (ft_error("Could not create thread.", rules));
+	return (1);
 }
 
 static int	philo_start(t_rules *rules)

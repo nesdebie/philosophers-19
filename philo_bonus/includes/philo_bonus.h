@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/24 12:18:46 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:51:01 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct s_philo
 	sem_t			*sem_philo_full;
 	sem_t			*sem_philo_dead;
 	sem_t			*sem_meal;
-	char			*sem_meal_name;
 	unsigned int	nb_forks_held;
 	unsigned int	id;
 	unsigned int	times_ate;
@@ -84,7 +83,6 @@ int		is_valid(int ac, char **av);
 /* INIT */
 t_rules	*init_rules(int ac, char **av);
 void	open_semaphores(t_rules *rules, t_philo *philo);
-int		set_threads(t_rules *rules);
 
 void	philosopher(t_rules *rules);
 void	grab_fork(t_philo *philo);
@@ -106,9 +104,6 @@ void	*process_killer(void *data);
 int		kill_all_philos(t_rules *rules, int exit_code);
 
 /* LIBFT */
-char	*ft_utoa(unsigned int nb, size_t len);
-char	*ft_strcat(char	*dst, const char *src);
-size_t	ft_strlen(const char *str);
 int		philo_atoi(char *str);
 
 /* FREES */
@@ -120,5 +115,6 @@ void	child_exit(t_rules *rules, int exit_code);
 int		error_msg(char *str, int exit_nb);
 int		ft_error(char *str, t_rules *rules);
 void	*error_null(char *str, t_rules *rules);
+int		rules_cleanup(t_rules *rules, int exit_code);
 
 #endif
