@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:47:54 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 13:29:26 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 13:59:19 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	*process_killer(void *data)
 	sem_wait(rules->this_philo->sem_philo_dead);
 	sem_wait(rules->this_philo->sem_philo_full);
 	sim_start_delay(rules->start_time);
-	while (end_condition_reached(rules, rules->this_philo) == 0)
+	while (!end_condition_reached(rules, rules->this_philo))
 	{
 		usleep(1000);
 		continue ;

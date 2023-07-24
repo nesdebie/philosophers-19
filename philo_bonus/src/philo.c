@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 15:23:33 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:00:11 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ static void	think_routine(t_philo *philo, int silent)
 	sem_post(philo->sem_meal);
 	if (time_to_think < 0)
 		time_to_think = 0;
-	if (time_to_think == 0 && silent == 1)
+	if (!time_to_think && silent == 1)
 		time_to_think = 1;
 	if (time_to_think > 600)
 		time_to_think = 200;
-	if (silent == 0)
+	if (!silent)
 		print_action(philo, 0, THINKING);
 	philo_sleep(time_to_think);
 }
@@ -59,7 +59,7 @@ static void	lone_philo_routine(t_philo *philo)
 		exit(EXIT_FAILURE);
 	sem_wait(philo->sem_philo_full);
 	sim_start_delay(philo->rules->start_time);
-	if (philo->rules->must_eat_count == 0)
+	if (!philo->rules->must_eat_count)
 	{
 		sem_post(philo->sem_philo_full);
 		exit(FULL);

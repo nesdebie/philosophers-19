@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/24 12:18:46 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 13:59:31 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	philo_start(t_rules *rules)
 			return (ft_error("Could not fork child.", rules));
 		else if (pid > 0)
 			rules->pids[i] = pid;
-		else if (pid == 0)
+		else if (!pid)
 		{
 			rules->this_philo = rules->philos[i];
 			philosopher(rules);
