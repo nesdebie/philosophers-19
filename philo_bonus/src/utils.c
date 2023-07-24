@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 16:24:30 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:18:46 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	set_threads(t_rules *rules)
 {
 	if (pthread_create(&rules->fed, NULL, &ft_all_fed, rules))
 		return (ft_error("Could not create thread.", rules));
-	if (pthread_create(&rules->starved, NULL, &ft_starve_to_death, rules))
+	if (pthread_create(&rules->dead, NULL, &ft_starve_to_death, rules))
 		return (ft_error("Could not create thread.", rules));
 	return (1);
 }

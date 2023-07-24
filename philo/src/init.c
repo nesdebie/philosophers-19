@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 11:33:32 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:18:07 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	init_manager(t_rules *rules, char **av)
 	rules->time_to_eat = ft_atoi(av[3]);
 	rules->time_to_sleep = ft_atoi(av[4]);
 	rules->all_fed = 0;
-	rules->starved = 0;
+	rules->dead = 0;
 	if (av[5])
 		rules->nb_meals = ft_atoi(av[5]);
 	else

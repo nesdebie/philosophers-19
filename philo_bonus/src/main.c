@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 16:24:11 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:18:46 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	rules_cleanup(t_rules *rules, int exit_code)
 {
 	if (rules)
 	{
-		pthread_join(rules->starved, NULL);
+		pthread_join(rules->dead, NULL);
 		pthread_join(rules->fed, NULL);
 		sem_close(rules->sem_forks);
 		sem_close(rules->sem_write);

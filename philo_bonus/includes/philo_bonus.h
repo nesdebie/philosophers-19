@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 15:23:44 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:18:46 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_rules
 	t_philo			*this_philo;
 	pid_t			*pids;
 	pthread_t		fed;
-	pthread_t		starved;
+	pthread_t		dead;
 }	t_rules;
 
 typedef struct s_philo
