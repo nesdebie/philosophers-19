@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/24 14:04:37 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/25 11:55:32 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,6 @@ void	philosopher(t_rules *rules)
 	if (philo->rules->nb_philos == 1)
 		lone_philo_routine(philo);
 	open_semaphores(rules, philo);
-	if (!philo->rules->must_eat_count)
-	{
-		sem_post(philo->sem_philo_full);
-		child_exit(rules, FULL);
-	}
-	if (!philo->rules->time_to_die)
-	{
-		sem_post(philo->sem_philo_dead);
-		child_exit(rules, DIED);
-	}
 	sem_wait(philo->sem_meal);
 	philo->last_meal = philo->rules->start_time;
 	sem_post(philo->sem_meal);

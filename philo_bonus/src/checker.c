@@ -1,25 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/24 14:54:58 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/25 12:05:04 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
-
-void	unlink_global_sems(void)
-{
-	sem_unlink("forks");
-	sem_unlink("write");
-	sem_unlink("fed");
-	sem_unlink("dead");
-	sem_unlink("stop");
-}
 
 int	is_stopped(t_rules *rules)
 {
@@ -31,7 +22,7 @@ int	is_stopped(t_rules *rules)
 	return (ret);
 }
 
-static int	only_digits(char *str)
+static int	is_only_digits(char *str)
 {
 	int	i;
 
@@ -45,23 +36,6 @@ static int	only_digits(char *str)
 	return (1);
 }
 
-int	philo_atoi(char *str)
-{
-	unsigned long long int	nb;
-	int						i;
-
-	i = 0;
-	nb = 0;
-	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
-	{
-		nb = nb * 10 + (str[i] - '0');
-		i++;
-	}
-	if (nb > INT32_MAX)
-		return (-1);
-	return ((int)nb);
-}
-
 int	is_valid(int ac, char **av)
 {
 	int	i;
@@ -70,11 +44,13 @@ int	is_valid(int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (!only_digits(av[i]))
+		if (!is_only_digits(av[i]))
 			return (error_msg("Not only-digits input found.", EXIT_FAILURE));
 		nb = philo_atoi(av[i]);
 		if (i == 1 && (nb <= 0))
-			return (error_msg("Unvalid amount of philosophers", EXIT_FAILURE));
+			return (error_msg("Invalid amount of philosophers", EXIT_FAILURE));
+		if (i != 1 && (nb <= 0))
+			return (error_msg("Invalid parameter", EXIT_FAILURE));
 		if (i != 1 && nb == -1)
 			return (error_msg("Too big input.", EXIT_FAILURE));
 		i++;

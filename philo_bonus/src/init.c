@@ -6,11 +6,28 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/24 14:12:18 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:29:25 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
+
+int	philo_atoi(char *str)
+{
+	unsigned long long int	nb;
+	int						i;
+
+	i = 0;
+	nb = 0;
+	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
+	{
+		nb = nb * 10 + (str[i] - '0');
+		i++;
+	}
+	if (nb > INT32_MAX)
+		return (-1);
+	return ((int)nb);
+}
 
 static t_philo	**init_philosophers(t_rules *rules)
 {
@@ -38,7 +55,6 @@ static t_philo	**init_philosophers(t_rules *rules)
 
 static int	init_global_semaphores(t_rules *rules)
 {
-	unlink_global_sems();
 	rules->sem_forks = sem_open("forks", O_CREAT,
 			S_IRUSR | S_IWUSR, rules->nb_philos);
 	if (rules->sem_forks == (sem_t *)-1)

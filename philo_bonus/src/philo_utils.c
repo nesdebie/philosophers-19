@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:34 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/24 14:13:04 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/25 12:16:44 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,4 @@ void	grab_fork(t_philo *philo)
 		print_action(philo, 0, FORK_2);
 	philo->nb_forks_held += 1;
 	sem_post(philo->sem_meal);
-}
-
-void	*free_rules(t_rules *rules)
-{
-	unsigned int	i;
-
-	if (!rules)
-		return (0);
-	if (rules->philos)
-	{
-		i = 0;
-		while (i < rules->nb_philos)
-		{
-			if (rules->philos[i])
-				free(rules->philos[i]);
-			i++;
-		}
-		free(rules->philos);
-	}
-	if (rules->pids)
-		free(rules->pids);
-	free(rules);
-	return (0);
-}
-
-int	sem_error_cleanup(t_rules *rules)
-{
-	sem_close(rules->sem_forks);
-	sem_close(rules->sem_write);
-	sem_close(rules->sem_philo_full);
-	sem_close(rules->sem_philo_dead);
-	sem_close(rules->sem_stop);
-	unlink_global_sems();
-	return (ft_error("Could not create semaphore.", rules));
 }

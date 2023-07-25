@@ -1,11 +1,12 @@
 NAME	= philo_bonus
 
 SRCS	=	./src/main.c \
-			./src/errors_and_exits.c \
+			./src/errors.c \
+			./src/clean_and_exit.c \
 			./src/init.c \
-			./src/utils.c \
-			./src/ft_kill.c \
-			./src/ft_print_events.c \
+			./src/checker.c \
+			./src/process_killer.c \
+			./src/event_printer.c \
 			./src/philo.c \
 			./src/philo_utils.c \
 			./src/open_semaphores.c \
