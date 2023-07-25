@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/25 11:55:32 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/25 14:02:59 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	think_routine(t_philo *philo, int silent)
 
 static void	lone_philo_routine(t_philo *philo)
 {
+	unlink_global_sems();
 	philo->sem_philo_full = sem_open("fed", O_CREAT,
 			S_IRUSR | S_IWUSR, philo->rules->nb_philos);
 	if (philo->sem_philo_full == (sem_t *)-1)
@@ -90,6 +91,11 @@ void	philosopher(t_rules *rules)
 	if (philo->rules->nb_philos == 1)
 		lone_philo_routine(philo);
 	open_semaphores(rules, philo);
+	if (philo->rules->must_eat_count == 0)
+	{
+		sem_post(philo->sem_philo_full);
+		child_exit(rules, FULL);
+	}
 	sem_wait(philo->sem_meal);
 	philo->last_meal = philo->rules->start_time;
 	sem_post(philo->sem_meal);
