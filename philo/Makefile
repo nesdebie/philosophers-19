@@ -1,7 +1,7 @@
 NAME	= philo
 
 SRCS	=	./src/main.c \
-			./src/ft_error.c \
+			./src/errors.c \
 			./src/init.c \
 			./src/utils.c \
 			./src/threads.c

@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/25 14:02:59 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/25 14:39:52 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	philosopher(t_rules *rules)
 	if (philo->rules->nb_philos == 1)
 		lone_philo_routine(philo);
 	open_semaphores(rules, philo);
-	if (philo->rules->must_eat_count == 0)
+	if (!philo->rules->must_eat_count)
 	{
 		sem_post(philo->sem_philo_full);
 		child_exit(rules, FULL);
