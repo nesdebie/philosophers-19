@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:17:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/31 12:24:14 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/08/03 10:18:30 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ static void	ft_destroyer(t_rules *r)
 	{
 		i = -1;
 		while (++i < r->nb_philo)
-		{
-			if (r->phi[i].thread_id)
-				pthread_join(r->phi[i].thread_id, NULL);
-		}
+			pthread_join(r->phi[i].thread_id, NULL);
 	}
 	i = -1;
 	while (++i < r->nb_philo)

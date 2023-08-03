@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 16:24:58 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/08/03 10:28:18 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int ac, char **av)
 {
 	t_rules	rules;
 	int		ret;
+	int		i;
 
 	if (ac < 5 || ac > 6)
 		return (ft_error("Wrong amount of arguments (min. 5 to 6)"));
@@ -28,6 +29,10 @@ int	main(int ac, char **av)
 		return (ft_error("malloc() failed"));
 	if (!ft_create_threads(&rules))
 	{
+		i = -1;
+		while (++i < rules.nb_philo)
+			pthread_mutex_destroy(&(rules.forks[i]));
+		pthread_mutex_destroy(&(rules.state_write));
 		free (rules.forks);
 		free (rules.phi);
 		return (ft_error("pthread_create() failed"));

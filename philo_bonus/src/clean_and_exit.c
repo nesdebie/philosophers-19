@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 11:36:45 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/31 12:27:35 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/07/25 12:42:01 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	*free_rules(t_rules *rules)
 void	child_exit(t_rules *rules, int exit_code)
 {
 	sem_post(rules->this_philo->sem_meal);
-	if (rules->this_philo->p_killer)
-		pthread_join(rules->this_philo->p_killer, NULL);
+	pthread_join(rules->this_philo->p_killer, NULL);
 	if (exit_code == ERR_SEM)
 		error_msg("Could not create semaphore.", EXIT_FAILURE);
 	if (exit_code == ERR_PTHREAD)
@@ -68,10 +67,8 @@ int	rules_cleanup(t_rules *rules, int exit_code)
 {
 	if (rules)
 	{
-		if (rules->dead)
-			pthread_join(rules->dead, NULL);
-		if (rules->fed)
-			pthread_join(rules->fed, NULL);
+		pthread_join(rules->dead, NULL);
+		pthread_join(rules->fed, NULL);
 		sem_close(rules->sem_forks);
 		sem_close(rules->sem_write);
 		sem_close(rules->sem_philo_full);
