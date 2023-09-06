@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 11:36:45 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/25 12:42:01 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:56:44 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,5 @@ int	rules_cleanup(t_rules *rules, int exit_code)
 		unlink_global_sems();
 		free_rules(rules);
 	}
-	exit (exit_code);
+	exit(exit_code);
 }

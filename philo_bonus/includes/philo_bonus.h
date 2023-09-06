@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/25 12:42:08 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:54:49 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 
 # define ERR_PTHREAD 7
 # define ERR_SEM 8
+
+# define OVERFLOW 2147483647
 
 typedef struct s_philo	t_philo;
 
@@ -76,6 +78,12 @@ typedef struct s_philo
 	t_rules			*rules;
 }	t_philo;
 
+/* PARENT */
+int		philo_stop(t_rules	*rules);
+
+/* CHILD */
+void	philosopher(t_rules *rules);
+
 /* CHECKERS */
 int		is_stopped(t_rules *rules);
 int		is_valid(int ac, char **av);
@@ -83,9 +91,6 @@ int		is_valid(int ac, char **av);
 /* INIT */
 t_rules	*init_rules(int ac, char **av);
 void	open_semaphores(t_rules *rules, t_philo *philo);
-
-void	philosopher(t_rules *rules);
-void	grab_fork(t_philo *philo);
 
 void	unlink_global_sems(void);
 
@@ -100,7 +105,6 @@ void	print_action(t_philo *philo, int end_flag, int status);
 /* KILLERS */
 void	*ft_all_fed(void *data);
 void	*ft_starve_to_death(void *data);
-void	*process_killer(void *data);
 int		kill_all_philos(t_rules *rules, int exit_code);
 
 /* LIBFT */
@@ -110,7 +114,7 @@ int		philo_atoi(char *str);
 void	*free_rules(t_rules *rules);
 int		sem_error_cleanup(t_rules *rules);
 
-/* ERRORS AND EXIT */
+/* ERRORS */
 void	child_exit(t_rules *rules, int exit_code);
 int		error_msg(char *str, int exit_nb);
 int		ft_error(char *str, t_rules *rules);

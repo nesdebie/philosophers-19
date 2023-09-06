@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/25 14:38:55 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:47:17 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ static int	is_only_digits(char *str)
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (0);
+			return (EXIT_FAILURE);
 		i++;
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 int	is_valid(int ac, char **av)
@@ -44,7 +44,7 @@ int	is_valid(int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (!is_only_digits(av[i]))
+		if (is_only_digits(av[i]))
 			return (error_msg("Not only-digits input found.", EXIT_FAILURE));
 		nb = philo_atoi(av[i]);
 		if (i == 1 && (nb <= 0))

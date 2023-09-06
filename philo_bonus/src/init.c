@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/25 14:04:11 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:38:22 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	philo_atoi(char *str)
 	{
 		nb = nb * 10 + (str[i] - '0');
 		i++;
-		if (nb > INT32_MAX)
+		if (nb > OVERFLOW)
 			return (-1);
 	}
 	return ((int)nb);
@@ -76,7 +76,7 @@ static int	init_global_semaphores(t_rules *rules)
 			S_IRUSR | S_IWUSR, 1);
 	if (rules->sem_stop == (sem_t *)-1)
 		return (sem_error_cleanup(rules));
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 t_rules	*init_rules(int ac, char **av)
@@ -95,11 +95,11 @@ t_rules	*init_rules(int ac, char **av)
 	rules->stop = 0;
 	if (ac - 1 == 5)
 		rules->must_eat_count = philo_atoi(av[5]);
-	if (!init_global_semaphores(rules))
-		return (0);
+	if (init_global_semaphores(rules))
+		return (NULL);
 	rules->philos = init_philosophers(rules);
 	if (!rules->philos)
-		return (0);
+		return (NULL);
 	rules->pids = malloc(sizeof * rules->pids * rules->nb_philos);
 	if (!rules->pids)
 		return (error_null("Could not allocate memory.", rules));

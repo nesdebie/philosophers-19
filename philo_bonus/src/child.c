@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/25 14:39:52 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:48:20 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
+
+static void	grab_fork(t_philo *philo)
+{
+	sem_wait(philo->sem_forks);
+	sem_wait(philo->sem_meal);
+	if (philo->nb_forks_held <= 0)
+		print_action(philo, 0, FORK_1);
+	if (philo->nb_forks_held == 1)
+		print_action(philo, 0, FORK_2);
+	philo->nb_forks_held += 1;
+	sem_post(philo->sem_meal);
+}
 
 static void	eat_sleep_routine(t_philo *philo)
 {
@@ -65,22 +77,11 @@ static void	lone_philo_routine(t_philo *philo)
 		sem_post(philo->sem_philo_full);
 		exit(FULL);
 	}
-	print_action(philo, 0, FORK_1);
+	grab_fork(philo);
 	philo_sleep(philo->rules->time_to_die);
 	print_action(philo, 0, DIED);
 	free_rules(philo->rules);
 	exit(DIED);
-}
-
-static void	philo_routine(t_philo *philo)
-{
-	if (philo->id % 2)
-		think_routine(philo, 1);
-	while (1)
-	{
-		eat_sleep_routine(philo);
-		think_routine(philo, 0);
-	}
 }
 
 void	philosopher(t_rules *rules)
@@ -100,5 +101,11 @@ void	philosopher(t_rules *rules)
 	philo->last_meal = philo->rules->start_time;
 	sem_post(philo->sem_meal);
 	sim_start_delay(philo->rules->start_time);
-	philo_routine(philo);
+	if (philo->id % 2)
+		think_routine(philo, 1);
+	while (1)
+	{
+		eat_sleep_routine(philo);
+		think_routine(philo, 0);
+	}
 }

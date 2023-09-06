@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:44:00 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/25 12:12:27 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:14:08 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_error(char *str, t_rules *rules)
 void	*error_null(char *str, t_rules *rules)
 {
 	ft_error(str, rules);
-	return (0);
+	return (NULL);
 }
 
 int	sem_error_cleanup(t_rules *rules)

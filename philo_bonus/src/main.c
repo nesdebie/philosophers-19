@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/25 14:37:24 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:58:40 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	set_threads(t_rules *rules)
 		return (ft_error("Could not create thread.", rules));
 	if (pthread_create(&rules->dead, NULL, &ft_starve_to_death, rules))
 		return (ft_error("Could not create thread.", rules));
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 static int	philo_start(t_rules *rules)
@@ -41,60 +41,9 @@ static int	philo_start(t_rules *rules)
 			philosopher(rules);
 		}
 	}
-	if (!set_threads(rules))
-		return (0);
-	return (1);
-}
-
-static int	get_child_philo(t_rules *rules, pid_t *pid)
-{
-	int	philo_exit_code;
-	int	exit_code;
-
-	if (*pid && waitpid(*pid, &philo_exit_code, WNOHANG))
-	{
-		if (WIFEXITED(philo_exit_code))
-		{
-			exit_code = WEXITSTATUS(philo_exit_code);
-			if (exit_code == DIED)
-				return (kill_all_philos(rules, 1));
-			if (exit_code == ERR_PTHREAD || exit_code == ERR_SEM)
-				return (kill_all_philos(rules, -1));
-			if (exit_code == FULL)
-			{
-				rules->philo_full_count += 1;
-				return (1);
-			}
-		}
-	}
-	return (0);
-}
-
-static int	philo_stop(t_rules	*rules)
-{
-	unsigned int	i;
-	int				exit_code;
-
-	sim_start_delay(rules->start_time);
-	while (!is_stopped(rules))
-	{
-		i = 0;
-		while (i < rules->nb_philos)
-		{
-			exit_code = get_child_philo(rules, &rules->pids[i]);
-			if (exit_code == 1 || exit_code == -1)
-			{
-				sem_wait(rules->sem_stop);
-				rules->stop = 1;
-				sem_post(rules->sem_philo_full);
-				sem_post(rules->sem_philo_dead);
-				sem_post(rules->sem_stop);
-				return (exit_code);
-			}
-			i++;
-		}
-	}
-	return (0);
+	if (set_threads(rules))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	main(int ac, char **av)
@@ -105,12 +54,12 @@ int	main(int ac, char **av)
 	if (ac < 5 || ac > 6)
 		return (error_msg("Wrong amount of arguments.", EXIT_FAILURE));
 	if (is_valid(ac, av))
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	rules = init_rules(ac, av);
 	if (!rules)
-		exit (EXIT_FAILURE);
-	if (!philo_start(rules))
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
+	if (philo_start(rules))
+		exit(EXIT_FAILURE);
 	if (philo_stop(rules) == -1)
 		return (rules_cleanup(rules, EXIT_FAILURE));
 	return (rules_cleanup(rules, EXIT_SUCCESS));

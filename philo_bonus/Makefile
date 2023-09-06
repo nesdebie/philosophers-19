@@ -7,10 +7,10 @@ SRCS	=	./src/main.c \
 			./src/checker.c \
 			./src/process_killer.c \
 			./src/event_printer.c \
-			./src/philo.c \
-			./src/philo_utils.c \
+			./src/child.c \
 			./src/open_semaphores.c \
-			./src/time.c
+			./src/time.c \
+			./src/parent.c
 
 OBJS	= $(SRCS:.c=.o)
 
