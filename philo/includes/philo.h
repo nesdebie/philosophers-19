@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 14:22:01 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:05:13 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,29 @@ typedef struct s_rules
 	int					nb_meals;
 	int					dead;
 	int					all_fed;
-	long long			first_timestamp;
+	time_t				start_time;
 	pthread_mutex_t		state_write;
 	pthread_mutex_t		*forks;
 	t_philosopher		*phi;
 }						t_rules;
 
-int			ft_error(char *str);
+/* ERROR */
+int		ft_error(char *str);
 
-int			init_manager(t_rules *rules, char **av);
+/* INIT AND CHECK */
+int		init_manager(t_rules *rules, char **av);
 
-size_t		ft_strlen(char const *str);
-int			philo_atoi(char *str);
-void		print_routine(t_rules *rules, int id, char *string);
-long long	get_time(void);
-void		better_usleep(long long time, t_rules *rules);
+/* EVENT PRINTER */
+void	print_routine(t_rules *rules, int id, char *string);
 
-int			ft_create_threads(t_rules *rules);
+/* THREADS */
+int		philo_threads(t_rules *rules);
+
+/* TIME */
+time_t	get_time(void);
+void	better_usleep(time_t time, t_rules *rules);
+
+/* LIBFT */
+int		philo_atoi(char *str);
 
 #endif

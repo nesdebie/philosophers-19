@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 11:58:40 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:59:00 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	philo_start(t_rules *rules)
 	unsigned int	i;
 	pid_t			pid;
 
-	rules->start_time = get_time_in_ms() + ((rules->nb_philos * 2) * 10);
+	rules->start_time = get_time() + ((rules->nb_philos * 2) * 10);
 	i = -1;
 	while (++i < rules->nb_philos)
 	{

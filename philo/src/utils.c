@@ -6,21 +6,11 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 14:19:39 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:09:19 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-size_t	ft_strlen(char const *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 
 int	philo_atoi(char *str)
 {
@@ -39,7 +29,7 @@ int	philo_atoi(char *str)
 	return ((int)nb);
 }
 
-long long	get_time(void)
+time_t	get_time(void)
 {
 	struct timeval	t;
 
@@ -47,16 +37,16 @@ long long	get_time(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void	better_usleep(long long time, t_rules *rules)
+void	better_usleep(time_t sleep_time, t_rules *rules)
 {
-	long long	i;
+	time_t	wake_up;
 
-	i = get_time();
+	wake_up = get_time() + sleep_time;
 	while (!(rules->dead))
 	{
-		if ((get_time() - i) >= time)
+		if (get_time() >= wake_up)
 			break ;
-		usleep(rules->nb_philo * 2);
+		usleep(100);
 	}
 }
 
@@ -64,6 +54,6 @@ void	print_routine(t_rules *rules, int id, char *s)
 {
 	pthread_mutex_lock(&(rules->state_write));
 	if (!(rules->dead))
-		printf("%lli %i %s\n", get_time() - rules->first_timestamp, id + 1, s);
+		printf("%li %i %s\n", get_time() - rules->start_time, id + 1, s);
 	pthread_mutex_unlock(&(rules->state_write));
 }

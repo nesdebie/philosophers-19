@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 14:35:28 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:04:28 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av)
 		return (ft_error("pthread_mutex_init() failed"));
 	else if (ret == MALLOC_FAIL)
 		return (ft_error("malloc() failed"));
-	if (ft_create_threads(&rules))
+	if (philo_threads(&rules))
 	{
 		i = -1;
 		while (++i < rules.nb_philo)

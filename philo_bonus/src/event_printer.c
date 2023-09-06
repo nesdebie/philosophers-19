@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:15:42 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/31 10:00:04 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:59:00 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_action(t_philo *philo, int end_flag, int status)
 	arr[FORK_1] = "has taken a fork";
 	arr[FORK_2] = arr[FORK_1];
 	sem_wait(philo->sem_write);
-	printf("%ld %d %s\n", get_time_in_ms() - philo->rules->start_time,
+	printf("%ld %d %s\n", get_time() - philo->rules->start_time,
 		philo->id + 1, arr[status]);
 	if (!end_flag)
 		sem_post(philo->sem_write);

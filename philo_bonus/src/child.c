@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:45:26 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 11:48:20 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:59:00 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	eat_sleep_routine(t_philo *philo)
 	grab_fork(philo);
 	print_action(philo, 0, EATING);
 	sem_wait(philo->sem_meal);
-	philo->last_meal = get_time_in_ms();
+	philo->last_meal = get_time();
 	sem_post(philo->sem_meal);
 	philo_sleep(philo->rules->time_to_eat);
 	print_action(philo, 0, SLEEPING);
@@ -49,7 +49,7 @@ static void	think_routine(t_philo *philo, int silent)
 
 	sem_wait(philo->sem_meal);
 	time_to_think = (philo->rules->time_to_die
-			- (get_time_in_ms() - philo->last_meal)
+			- (get_time() - philo->last_meal)
 			- philo->rules->time_to_eat) / 2;
 	sem_post(philo->sem_meal);
 	if (time_to_think < 0)

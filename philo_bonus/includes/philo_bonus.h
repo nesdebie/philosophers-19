@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 11:54:49 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:59:00 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	open_semaphores(t_rules *rules, t_philo *philo);
 void	unlink_global_sems(void);
 
 /* TIME */
-time_t	get_time_in_ms(void);
+time_t	get_time(void);
 void	philo_sleep(time_t sleep_time);
 void	sim_start_delay(time_t start_time);
 

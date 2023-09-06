@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 23:47:08 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 11:46:24 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:59:00 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	end_condition_reached(t_rules *rules, t_philo *philo)
 {
 	sem_wait(philo->sem_meal);
-	if (get_time_in_ms() - philo->last_meal >= rules->time_to_die)
+	if (get_time() - philo->last_meal >= rules->time_to_die)
 	{
 		print_action(philo, 1, DIED);
 		sem_post(rules->this_philo->sem_philo_dead);

@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:17:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 14:35:28 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:04:28 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,12 @@ static void	*routine(void *void_philosopher)
 	return (0);
 }
 
-int	ft_create_threads(t_rules *r)
+int	philo_threads(t_rules *r)
 {
 	int				i;
 
 	i = 0;
-	r->first_timestamp = get_time();
+	r->start_time = get_time();
 	while (i < r->nb_philo)
 	{
 		if (pthread_create(&(r->phi[i].thread_id), NULL, routine, &(r->phi[i])))
