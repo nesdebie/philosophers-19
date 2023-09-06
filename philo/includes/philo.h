@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/14 11:22:56 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:22:01 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define WRONG_ARGS 1
 # define MUTEX_FAIL 2
 # define MALLOC_FAIL 3
+
+# define OVERFLOW 2147483647
 
 typedef struct s_philosopher
 {
@@ -51,10 +53,10 @@ typedef struct s_rules
 
 int			ft_error(char *str);
 
-int			init_manager(t_rules *rules, char **argv);
+int			init_manager(t_rules *rules, char **av);
 
 size_t		ft_strlen(char const *str);
-int			ft_atoi(char const *str);
+int			philo_atoi(char *str);
 void		print_routine(t_rules *rules, int id, char *string);
 long long	get_time(void);
 void		better_usleep(long long time, t_rules *rules);

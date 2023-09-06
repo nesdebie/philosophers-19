@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/17 15:00:56 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:19:39 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,21 @@ size_t	ft_strlen(char const *str)
 	return (i);
 }
 
-int	ft_atoi(char const *str)
+int	philo_atoi(char *str)
 {
-	int		i;
-	int		sign;
-	long	result;
+	unsigned long long int	nb;
+	int						i;
 
-	result = 0;
 	i = 0;
-	sign = 1;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == 43 || str[i] == 45)
+	nb = 0;
+	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
-		if (str[i] == 45)
-			sign *= -1;
+		nb = nb * 10 + (str[i] - '0');
 		i++;
+		if (nb > OVERFLOW)
+			return (-1);
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = result * 10 + str[i] - 48;
-		i++;
-	}
-	return ((int)(sign * result));
+	return ((int)nb);
 }
 
 long long	get_time(void)

@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/08/03 10:28:18 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:21:55 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ int	main(int ac, char **av)
 		free (rules.phi);
 		return (ft_error("pthread_create() failed"));
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/07/31 10:26:32 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:23:49 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@ static int	init_mutex(t_rules *rules)
 
 	rules->forks = malloc(sizeof(*(rules->forks)) * rules->nb_philo);
 	if (!rules->forks)
-		return (0);
+		return (EXIT_FAILURE);
 	i = rules->nb_philo;
 	while (--i >= 0)
 	{
 		if (pthread_mutex_init(&(rules->forks[i]), NULL))
 		{
 			free (rules->forks);
-			return (0);
+			return (EXIT_FAILURE);
 		}
 	}
 	if (pthread_mutex_init(&(rules->state_write), NULL))
 	{
 		free (rules->forks);
-		return (0);
+		return (EXIT_FAILURE);
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 static void	init_philosophers(t_rules *rules)
@@ -55,29 +55,52 @@ static void	init_philosophers(t_rules *rules)
 static int	rules_checker(t_rules *rules, char *fifth_arg)
 {
 	if (rules->nb_philo < 1 || rules->time_to_die < 0)
-		return (WRONG_ARGS);
+		return (EXIT_FAILURE);
 	if (rules->time_to_eat < 0 || rules->time_to_sleep < 0)
-		return (WRONG_ARGS);
+		return (EXIT_FAILURE);
 	if (fifth_arg && rules->nb_meals <= 0)
-		return (WRONG_ARGS);
-	return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+static int	is_only_digits(char **av)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	j = 0;
+	while (av[i])
+	{
+		j = 0;
+		while (av[i][j])
+		{
+			if (av[i][j] < '0' || av[i][j] > '9')
+				return (EXIT_FAILURE);
+			j++;
+		}
+		i++;
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	init_manager(t_rules *rules, char **av)
 {
-	rules->nb_philo = ft_atoi(av[1]);
-	rules->time_to_die = ft_atoi(av[2]);
-	rules->time_to_eat = ft_atoi(av[3]);
-	rules->time_to_sleep = ft_atoi(av[4]);
+	if (is_only_digits(av))
+		return (WRONG_ARGS);
+	rules->nb_philo = philo_atoi(av[1]);
+	rules->time_to_die = philo_atoi(av[2]);
+	rules->time_to_eat = philo_atoi(av[3]);
+	rules->time_to_sleep = philo_atoi(av[4]);
 	rules->all_fed = 0;
 	rules->dead = 0;
 	if (av[5])
-		rules->nb_meals = ft_atoi(av[5]);
+		rules->nb_meals = philo_atoi(av[5]);
 	else
 		rules->nb_meals = -1;
 	if (rules_checker(rules, av[5]))
 		return (WRONG_ARGS);
-	if (!init_mutex(rules))
+	if (init_mutex(rules))
 		return (MUTEX_FAIL);
 	rules->phi = malloc(sizeof(rules->phi) * rules->nb_philo);
 	if (!rules->phi)
