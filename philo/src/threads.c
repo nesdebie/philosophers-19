@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:17:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 13:55:35 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:35:28 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void	ft_destroyer(t_rules *r)
 	i = -1;
 	while (++i < r->nb_philo)
 		pthread_mutex_destroy(&(r->forks[i]));
-	free (r->forks);
-	free (r->phi);
+	free(r->forks);
+	free(r->phi);
 	pthread_mutex_destroy(&(r->state_write));
 }
 
@@ -105,11 +105,11 @@ int	ft_create_threads(t_rules *r)
 	while (i < r->nb_philo)
 	{
 		if (pthread_create(&(r->phi[i].thread_id), NULL, routine, &(r->phi[i])))
-			return (0);
+			return (EXIT_FAILURE);
 		r->phi[i].t_last_meal = get_time();
 		i++;
 	}
 	is_dead(r);
 	ft_destroyer(r);
-	return (1);
+	return (EXIT_SUCCESS);
 }

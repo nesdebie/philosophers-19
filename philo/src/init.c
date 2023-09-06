@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 14:23:49 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:35:28 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static int	init_mutex(t_rules *rules)
 	{
 		if (pthread_mutex_init(&(rules->forks[i]), NULL))
 		{
-			free (rules->forks);
+			free(rules->forks);
 			return (EXIT_FAILURE);
 		}
 	}
 	if (pthread_mutex_init(&(rules->state_write), NULL))
 	{
-		free (rules->forks);
+		free(rules->forks);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
