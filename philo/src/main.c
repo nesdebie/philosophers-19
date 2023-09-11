@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/11 15:59:39 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:02:03 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	free_rules(t_rules *rules, int error, int end)
 	if (end == -1)
 		if (error == WRONG_ARGS)
 			return (1);
-	if (!error)
+	if (!error && end == -1)
 		end = rules->nb_philo;
 	if (rules->forks != NULL)
 	{
