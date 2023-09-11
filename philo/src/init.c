@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 14:35:28 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/11 15:34:07 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,27 @@ static int	init_mutex(t_rules *rules)
 {
 	int	i;
 
-	rules->forks = malloc(sizeof(*(rules->forks)) * rules->nb_philo);
+	pthread_mutex_init(&rules->state_write, NULL);
+	rules->forks = (pthread_mutex_t *)
+		malloc(sizeof(*(rules->forks)) * rules->nb_philo);
 	if (!rules->forks)
 		return (EXIT_FAILURE);
-	i = rules->nb_philo;
-	while (--i >= 0)
-	{
-		if (pthread_mutex_init(&(rules->forks[i]), NULL))
-		{
-			free(rules->forks);
-			return (EXIT_FAILURE);
-		}
-	}
-	if (pthread_mutex_init(&(rules->state_write), NULL))
+	i = 0;
+	while (i < rules->nb_philo)
+		pthread_mutex_init(&rules->forks[i++], NULL);
+	return (EXIT_SUCCESS);
+}
+
+static int	init_philosophers(t_rules *rules)
+{
+	int	i;
+
+	rules->phi = malloc(sizeof(rules->phi) * rules->nb_philo);
+	if (!rules->phi)
 	{
 		free(rules->forks);
 		return (EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS);
-}
-
-static void	init_philosophers(t_rules *rules)
-{
-	int	i;
-
 	i = rules->nb_philo;
 	while (--i >= 0)
 	{
@@ -50,6 +47,7 @@ static void	init_philosophers(t_rules *rules)
 		rules->phi[i].t_last_meal = 0;
 		rules->phi[i].rules = rules;
 	}
+	return (EXIT_SUCCESS);
 }
 
 static int	rules_checker(t_rules *rules, char *fifth_arg)
@@ -100,14 +98,9 @@ int	init_manager(t_rules *rules, char **av)
 		rules->nb_meals = -1;
 	if (rules_checker(rules, av[5]))
 		return (WRONG_ARGS);
+	if (init_philosophers(rules))
+		return (MALLOC_FAIL);
 	if (init_mutex(rules))
 		return (MUTEX_FAIL);
-	rules->phi = malloc(sizeof(rules->phi) * rules->nb_philo);
-	if (!rules->phi)
-	{
-		free(rules->forks);
-		return (MALLOC_FAIL);
-	}
-	init_philosophers(rules);
-	return (0);
+	return (EXIT_SUCCESS);
 }

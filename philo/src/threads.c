@@ -6,29 +6,11 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:17:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 15:04:28 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/11 15:55:31 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-static void	ft_destroyer(t_rules *r)
-{
-	int	i;
-
-	if (r->nb_philo > 1)
-	{
-		i = -1;
-		while (++i < r->nb_philo)
-			pthread_join(r->phi[i].thread_id, NULL);
-	}
-	i = -1;
-	while (++i < r->nb_philo)
-		pthread_mutex_destroy(&(r->forks[i]));
-	free(r->forks);
-	free(r->phi);
-	pthread_mutex_destroy(&(r->state_write));
-}
 
 static void	is_dead(t_rules *r)
 {
@@ -105,11 +87,10 @@ int	philo_threads(t_rules *r)
 	while (i < r->nb_philo)
 	{
 		if (pthread_create(&(r->phi[i].thread_id), NULL, routine, &(r->phi[i])))
-			return (EXIT_FAILURE);
+			return (i);
 		r->phi[i].t_last_meal = get_time();
 		i++;
 	}
 	is_dead(r);
-	ft_destroyer(r);
 	return (EXIT_SUCCESS);
 }
