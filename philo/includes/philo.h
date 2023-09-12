@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 15:05:13 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:23:18 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_rules
 	int					dead;
 	int					all_fed;
 	time_t				start_time;
+	pthread_mutex_t		died;
 	pthread_mutex_t		state_write;
 	pthread_mutex_t		*forks;
 	t_philosopher		*phi;

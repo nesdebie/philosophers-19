@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:17:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 15:04:28 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:26:15 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	ft_destroyer(t_rules *r)
 	free(r->forks);
 	free(r->phi);
 	pthread_mutex_destroy(&(r->state_write));
+	pthread_mutex_destroy(&(r->died));
 }
 
 static void	is_dead(t_rules *r)
@@ -41,8 +42,10 @@ static void	is_dead(t_rules *r)
 		{
 			if (get_time() - r->phi[i].t_last_meal > r->time_to_die)
 			{
+				pthread_mutex_lock(&r->died);
 				print_routine(r, i, "died");
 				r->dead = 1;
+				pthread_mutex_unlock(&r->died);
 				break ;
 			}
 			usleep(100);

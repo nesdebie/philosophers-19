@@ -6,20 +6,17 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/12 15:55:29 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:25:12 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static int	init_mutex(t_rules *rules)
+static int	init_mutex(t_rules *rules, int i)
 {
-	int	i;
-
 	rules->forks = malloc(sizeof(*(rules->forks)) * rules->nb_philo);
 	if (!rules->forks)
 		return (EXIT_FAILURE);
-	i = rules->nb_philo;
 	while (--i >= 0)
 	{
 		if (pthread_mutex_init(&(rules->forks[i]), NULL))
@@ -30,6 +27,12 @@ static int	init_mutex(t_rules *rules)
 	}
 	if (pthread_mutex_init(&(rules->state_write), NULL))
 	{
+		free(rules->forks);
+		return (EXIT_FAILURE);
+	}
+	if (pthread_mutex_init(&(rules->died), NULL))
+	{
+		pthread_mutex_destroy(&rules->state_write);
 		free(rules->forks);
 		return (EXIT_FAILURE);
 	}
@@ -100,7 +103,7 @@ int	init_manager(t_rules *rules, char **av)
 		rules->nb_meals = -1;
 	if (rules_checker(rules, av[5]))
 		return (WRONG_ARGS);
-	if (init_mutex(rules))
+	if (init_mutex(rules, philo_atoi(av[1])))
 		return (MUTEX_FAIL);
 	rules->phi = malloc(sizeof(*(rules->phi)) * rules->nb_philo);
 	if (!rules->phi)
