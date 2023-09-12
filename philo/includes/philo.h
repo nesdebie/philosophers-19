@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/11 15:42:47 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:05:13 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # define MALLOC_FAIL 3
 
 # define OVERFLOW 2147483647
-
-struct s_rules;
 
 typedef struct s_philosopher
 {
@@ -54,7 +52,7 @@ typedef struct s_rules
 }						t_rules;
 
 /* ERROR */
-int		ft_error(char *str, int error);
+int		ft_error(char *str);
 
 /* INIT AND CHECK */
 int		init_manager(t_rules *rules, char **av);
