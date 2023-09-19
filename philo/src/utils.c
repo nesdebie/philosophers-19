@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:18:17 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/19 12:52:59 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/19 15:18:57 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	better_usleep(time_t sleep_time, t_rules *rules)
 	{
 		if (get_time() >= wake_up)
 			break ;
-		usleep(10);
+		usleep(100);
 	}
 }
 
