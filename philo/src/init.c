@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:23 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/12 16:25:12 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/19 12:52:16 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ static int	init_mutex(t_rules *rules, int i)
 	}
 	if (pthread_mutex_init(&(rules->state_write), NULL))
 	{
-		free(rules->forks);
-		return (EXIT_FAILURE);
-	}
-	if (pthread_mutex_init(&(rules->died), NULL))
-	{
-		pthread_mutex_destroy(&rules->state_write);
 		free(rules->forks);
 		return (EXIT_FAILURE);
 	}
@@ -96,7 +90,7 @@ int	init_manager(t_rules *rules, char **av)
 	rules->time_to_eat = philo_atoi(av[3]);
 	rules->time_to_sleep = philo_atoi(av[4]);
 	rules->all_fed = 0;
-	rules->dead = 0;
+	rules->dead = 0 ;
 	if (av[5])
 		rules->nb_meals = philo_atoi(av[5]);
 	else

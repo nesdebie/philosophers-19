@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:17:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/12 16:26:15 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/19 12:52:39 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	ft_destroyer(t_rules *r)
 	free(r->forks);
 	free(r->phi);
 	pthread_mutex_destroy(&(r->state_write));
-	pthread_mutex_destroy(&(r->died));
 }
 
 static void	is_dead(t_rules *r)
@@ -40,12 +39,10 @@ static void	is_dead(t_rules *r)
 		i = -1;
 		while (++i < r->nb_philo)
 		{
-			if (get_time() - r->phi[i].t_last_meal > r->time_to_die)
+			if ((get_time() - r->phi[i].t_last_meal) > r->time_to_die)
 			{
-				pthread_mutex_lock(&r->died);
 				print_routine(r, i, "died");
 				r->dead = 1;
-				pthread_mutex_unlock(&r->died);
 				break ;
 			}
 			usleep(100);
@@ -61,7 +58,7 @@ static void	is_dead(t_rules *r)
 	}
 }
 
-static void	philo_eats(t_philosopher *philo)
+static void	philo_eats(t_philosopher *philo, int id)
 {
 	t_rules	*rules;
 
@@ -71,7 +68,7 @@ static void	philo_eats(t_philosopher *philo)
 	pthread_mutex_lock(&(rules->forks[philo->right_fork_id]));
 	print_routine(rules, philo->id, "has taken a fork");
 	print_routine(rules, philo->id, "is eating");
-	philo->t_last_meal = get_time();
+	rules->phi[id].t_last_meal = get_time();
 	(philo->is_fed)++;
 	better_usleep(rules->time_to_eat, rules);
 	pthread_mutex_unlock(&(rules->forks[philo->left_fork_id]));
@@ -89,7 +86,7 @@ static void	*routine(void *void_philosopher)
 		usleep(15000);
 	while (!(rules->dead))
 	{
-		philo_eats(philo);
+		philo_eats(philo, philo->id);
 		if (rules->all_fed)
 			break ;
 		print_routine(rules, philo->id, "is sleeping");
@@ -107,9 +104,9 @@ int	philo_threads(t_rules *r)
 	r->start_time = get_time();
 	while (i < r->nb_philo)
 	{
+		r->phi[i].t_last_meal = get_time();
 		if (pthread_create(&(r->phi[i].thread_id), NULL, routine, &(r->phi[i])))
 			return (EXIT_FAILURE);
-		r->phi[i].t_last_meal = get_time();
 		i++;
 	}
 	is_dead(r);

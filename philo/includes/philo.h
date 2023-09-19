@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/12 16:23:18 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/19 12:53:17 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@
 # include <stdlib.h>
 # include <string.h>
 # include <pthread.h>
+# include <stdatomic.h>
 
 # define WRONG_ARGS 1
 # define MUTEX_FAIL 2
 # define MALLOC_FAIL 3
 
 # define OVERFLOW 2147483647
+
+struct	s_rules;
 
 typedef struct s_philosopher
 {
@@ -43,10 +46,9 @@ typedef struct s_rules
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					nb_meals;
-	int					dead;
 	int					all_fed;
 	time_t				start_time;
-	pthread_mutex_t		died;
+	atomic_int			dead;
 	pthread_mutex_t		state_write;
 	pthread_mutex_t		*forks;
 	t_philosopher		*phi;
