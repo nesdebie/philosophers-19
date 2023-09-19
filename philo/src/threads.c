@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:17:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/19 14:12:16 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/19 15:09:51 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	philo_threads(t_rules *r)
 	{
 		r->phi[i].t_last_meal = get_time();
 		if (pthread_create(&(r->phi[i].thread_id), NULL, routine, &(r->phi[i])))
-			return (EXIT_FAILURE);
+			return (i);
 		i++;
 	}
 	is_dead(r);
