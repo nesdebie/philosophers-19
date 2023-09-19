@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/06 14:59:00 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/19 15:32:20 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <pthread.h>
+# include <stdatomic.h>
 
 # define DIED 0
 # define EATING 1
@@ -54,7 +55,7 @@ typedef struct s_rules
 	unsigned int	philo_full_count;
 	sem_t			*sem_philo_dead;
 	sem_t			*sem_stop;
-	int				stop;
+	atomic_int		stop;
 	t_philo			**philos;
 	t_philo			*this_philo;
 	pid_t			*pids;
@@ -72,9 +73,9 @@ typedef struct s_philo
 	sem_t			*sem_meal;
 	unsigned int	nb_forks_held;
 	unsigned int	id;
-	unsigned int	times_ate;
+	atomic_uint		times_ate;
 	int				ate_enough;
-	time_t			last_meal;
+	atomic_long		last_meal;
 	t_rules			*rules;
 }	t_philo;
 
