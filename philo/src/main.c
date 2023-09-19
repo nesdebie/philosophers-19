@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 14:16:47 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/19 15:11:26 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/19 15:17:45 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ int	main(int ac, char **av)
 	if (ret)
 	{
 		while (--ret >= 0)
-			pthread_mutex_destroy(&(rules.forks[ret]));
+			pthread_join(rules.phi[ret].thread_id, NULL);
+		while (++ret < rules.nb_philo)
+			pthread_mutex_destroy(&rules.forks[ret]);
 		pthread_mutex_destroy(&(rules.state_write));
 		free(rules.forks);
 		free(rules.phi);
