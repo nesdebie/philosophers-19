@@ -6,7 +6,7 @@
 /*   By: nesdebie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:42:36 by nesdebie          #+#    #+#             */
-/*   Updated: 2023/09/19 12:53:17 by nesdebie         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:39:40 by nesdebie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ struct	s_rules;
 typedef struct s_philosopher
 {
 	int					id;
-	int					is_fed;
+	atomic_int			is_fed;
 	int					left_fork_id;
 	int					right_fork_id;
-	long long			t_last_meal;
+	atomic_long			t_last_meal;
 	struct s_rules		*rules;
 	pthread_t			thread_id;
 }						t_philosopher;
@@ -42,11 +42,11 @@ typedef struct s_philosopher
 typedef struct s_rules
 {
 	int					nb_philo;
-	int					time_to_die;
-	int					time_to_eat;
-	int					time_to_sleep;
+	long				time_to_die;
+	long				time_to_eat;
+	long				time_to_sleep;
 	int					nb_meals;
-	int					all_fed;
+	atomic_int			all_fed;
 	time_t				start_time;
 	atomic_int			dead;
 	pthread_mutex_t		state_write;
